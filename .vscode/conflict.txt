@@ -1,2 +1,6 @@
 Hello world!
+<<<<<<< HEAD
 Heyo
+=======
+Goodbye!
+>>>>>>> 7ab79e14e8e294a890cdc0a1b0c54d5783effbd0
