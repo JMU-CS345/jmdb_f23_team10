@@ -7,6 +7,7 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const movieContainer = document.getElementById('movie-container');
 
+const movieDetail = document.getElementById('movie-detail');
 getMovies(API_URL);
 
 function getMovies(url) {
