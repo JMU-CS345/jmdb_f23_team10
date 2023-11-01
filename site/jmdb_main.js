@@ -74,3 +74,4 @@ function showMovies(data) {
     movieContainer.appendChild(movieDiv);
   });
 }
+
