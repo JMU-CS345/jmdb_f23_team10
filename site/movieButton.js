@@ -21,11 +21,12 @@ class movieButton {
       }
     }
     
-    display(x, y) {
+    display(x, y, onClick) {
       if (this.title) {
-        // Display movie title
-        textSize(16);
-        text(this.title, x, y);
+        // Create a clickable button
+        let button = createButton(this.title);
+        button.position(x, y);
+        button.mousePressed(onClick);
   
         // Display movie image
         if (this.image) {
@@ -45,4 +46,7 @@ class movieButton {
       }
     }
   }
-  
+
+function movieButtonClick() {
+    //placeholder function to allow buttons to be constructed
+}
