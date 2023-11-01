@@ -1,24 +1,72 @@
+const API_KEY = "api_key=f61be177e52665e7c5e6973bb615e517";
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+const API_URL = BASE_URL + 'movie/popular?' + API_KEY
 
-let button;
-let keyval;
-let input;
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+const movieContainer = document.getElementById('movie-container');
 
-function setup() {
-    createCanvas(800, 600);
-    input = createInput();
-    button = createButton("Fetch");
-    button.mousePressed(fetchData);
-    keyval = new Keyval(KEYVAL_API_KEY);
+getMovies(API_URL)
+
+function getMovies(url){
+  fetch(url).then(res => res.json()).then(data => {
+    showMovies(data.results)
+  })
 }
 
-function draw() {
-    background(0);
-}
+searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value;
+    
 
-function fetchData() {
-    keyval.set("test", input.value(), function (data) {
-        keyval.get("test", function (data) {
-            console.log(data);
-        });
+    movieContainer.innerHTML = '';
+
+    if (searchTerm) {
+        const searchURL = `${BASE_URL}search/movie?${API_KEY}&query=${searchTerm}`;
+
+
+        fetch(searchURL)
+            .then(response => response.json())
+            .then(data => {
+                showMovies(data.results);
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+            });
+    }
+});
+
+function showMovies(data) {
+    data.forEach(movie => {
+        const { title, poster_path, vote_average, overview, id } = movie; // Include movie ID if available
+
+        const movieDiv = document.createElement('div');
+        movieDiv.classList.add('movie');
+
+        const img = document.createElement('img');
+        img.src = IMG_URL + poster_path;
+        img.alt = title;
+
+
+        const movieInfo = document.createElement('div');
+        movieInfo.classList.add('movie-info');
+
+        const titleHeading = document.createElement('h3');
+        titleHeading.innerText = title;
+
+        const ratingPara = document.createElement('p');
+        ratingPara.innerText = `Rating: ${vote_average}`;
+
+        const overviewPara = document.createElement('p');
+        overviewPara.innerText = overview;
+
+        movieInfo.appendChild(titleHeading);
+        movieInfo.appendChild(ratingPara);
+        movieInfo.appendChild(overviewPara);
+
+        movieDiv.appendChild(img);
+        movieDiv.appendChild(movieInfo);
+
+        movieContainer.appendChild(movieDiv);
     });
 }
