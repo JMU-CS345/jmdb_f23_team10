@@ -15,13 +15,24 @@ background-color: #1b1b1b;
 <script src="../p5.js"></script>
 <script src="../api_keys.js"></script>
 <!-- <script src="../addons/p5.sound.js"></script> -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const homeLink = document.getElementById("home-link");
+  
+      // Add a click event listener to the logo
+      homeLink.addEventListener("click", function () {
+          // Redirect to the first page
+          window.location.href = "http://127.0.0.1:5501/site/index.html";
+      });
+  });
+</script>
 </head>
 <body>
 <main>
 <script src="apitest.js"></script>
 <script src="../lib/keyval.js"></script>
 </main>
-<img src="logo.jpg" alt="testing" id="logo">
+<img src="logo.jpg" alt="testing" id="home-link" width="150" height="150">
 </body>
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
