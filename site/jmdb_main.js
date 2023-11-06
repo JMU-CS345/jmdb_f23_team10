@@ -18,7 +18,14 @@ function getMovies(url) {
     });
 }
 
-searchButton.addEventListener('click', function () {
+searchButton.addEventListener('click', performSearch);
+searchInput.addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    performSearch();
+  }
+});
+
+function performSearch() {
   const searchTerm = searchInput.value;
 
   movieContainer.innerHTML = '';
@@ -35,7 +42,7 @@ searchButton.addEventListener('click', function () {
         console.error('An error occurred:', error);
       });
   }
-});
+}
 
 function showMovies(data) {
   data.forEach((movie) => {
