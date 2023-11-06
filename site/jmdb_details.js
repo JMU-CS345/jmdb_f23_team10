@@ -37,6 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const overviewElement = document.createElement("p");
     overviewElement.textContent = overview;
 
+    // Apply CSS to wrap text at a specified width
+    overviewElement.style.width = "350px";
+    overviewElement.style.whiteSpace = "pre-wrap";
+
     // Display movie details in the page
     document.body.appendChild(img);
     document.body.appendChild(titleElement);

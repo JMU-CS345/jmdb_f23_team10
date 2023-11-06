@@ -122,6 +122,8 @@ header {
 }
 
 .movie p {
-    font-size: 16px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
     line-height: 1.5;
 }
