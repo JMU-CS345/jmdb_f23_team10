@@ -10,6 +10,7 @@ const movieContainer = document.getElementById('movie-container');
 const movieDetail = document.getElementById('movie-detail');
 getMovies(API_URL);
 
+
 function getMovies(url) {
   fetch(url)
     .then((res) => res.json())
@@ -67,6 +68,7 @@ function showMovies(data) {
     titleHeading.innerText = title;
 
     const ratingPara = document.createElement('p');
+    updateColor(ratingPara, vote_average);
     ratingPara.innerText = `Rating: ${vote_average}`;
 
     const overviewPara = document.createElement('p');
@@ -74,12 +76,23 @@ function showMovies(data) {
 
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
-    movieInfo.appendChild(overviewPara);
+    
 
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
 
     movieContainer.appendChild(movieDiv);
   });
+
 }
 
+function updateColor(elt ,vote_average) {
+  if (vote_average > 7){
+    elt.style['color'] = 'green';
+  } 
+  if (vote_average < 7 && vote_average > 4.5) {
+    elt.style['color'] = 'orange';
+  } else {
+    elt.style['color'] = 'green';
+  }
+}
