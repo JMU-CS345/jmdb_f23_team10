@@ -1,5 +1,8 @@
-
-body, h1, h2, h3, p {
+body,
+h1,
+h2,
+h3,
+p {
     margin: 0;
     padding: 0;
 }
@@ -48,43 +51,4 @@ body {
 
 #search-button:hover {
     background-color: #0056b3;
-}
-
-
-#movie-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.movie {
-    flex: 1;
-    min-width: calc(33.33% - 20px); 
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.movie img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.movie .movie-info {
-    padding: 10px;
-}
-
-.movie h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.movie p {
-    font-size: 18px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    line-height: 1.5;
 }
