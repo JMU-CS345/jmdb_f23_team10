@@ -10,6 +10,45 @@ body {
     background-color: #f2f2f2;
 }
 
+/* Reset some default styles for margin and padding */
+body, h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+#logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#home-link {
+    width: 150px;
+    height: 150px;
+}
+
+#site-title {
+    font-family: 'Rammetto One', cursive;
+    font-size: 69px;
+    color: #a45ee5;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 .container {
     width: 80%;
