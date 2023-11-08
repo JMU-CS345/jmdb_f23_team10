@@ -1,3 +1,6 @@
+const movieContainer = document.getElementById('movie-container2');
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const movieDetailButton = document.getElementById("movie-detail");
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function displayMovieDetails(movie) {
     const { title, poster_path, vote_average, overview } = movie;
+
+    const movieDiv = document.createElement('div');
+    movieDiv.classList.add('movie2');
 
     const titleElement = document.createElement("h1");
     titleElement.textContent = title;
