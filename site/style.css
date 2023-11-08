@@ -1,9 +1,7 @@
-
 body, h1, h2, h3, p {
     margin: 0;
     padding: 0;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -60,7 +58,6 @@ header {
     border-radius: 5px;
 }
 
-
 .search-bar {
     display: flex;
     margin-bottom: 20px;
@@ -88,7 +85,6 @@ header {
 #search-button:hover {
     background-color: #0056b3;
 }
-
 
 #movie-container {
     display: flex;
