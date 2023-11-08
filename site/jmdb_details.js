@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (movieId) {
     // Fetch and display movie details when the button is clicked
     fetchMovieDetails(movieId);
+    fetchCastDetails(movieId); // Fetch cast details
   }
 
   function fetchMovieDetails(movieId) {
@@ -58,12 +59,47 @@ document.addEventListener("DOMContentLoaded", function () {
     movieInfo.appendChild(img);
     movieContainer2.appendChild(movieDiv);
   }
+
+  function fetchCastDetails(movieId) {
+    // Make an API request to get cast details for the movie
+    fetch(`${BASE_URL}movie/${movieId}/credits?${API_KEY}`)
+      .then((response) => response.json())
+      .then((cast) => {
+        displayCastDetails(cast.cast); // Assuming cast is an array of actors
+      })
+      .catch((error) => {
+        console.error("Error fetching cast details:", error);
+      });
+  }
+
+  function displayCastDetails(cast) {
+    const castContainer = document.getElementById("cast-container");
+
+    cast.forEach((actor) => {
+      const { name, profile_path } = actor;
+
+      const actorDiv = document.createElement("div");
+      actorDiv.classList.add('actor');
+
+      const actorImg = document.createElement('img');
+      actorImg.src = IMG_URL + profile_path;
+      actorImg.alt = name;
+
+      const actorName = document.createElement('p');
+      actorName.innerText = name;
+
+      actorDiv.appendChild(actorImg);
+      actorDiv.appendChild(actorName);
+
+      castContainer.appendChild(actorDiv);
+    });
+  }
 });
 
-function updateColor(elt ,vote_average) {
-  if (vote_average > 7){
+function updateColor(elt, vote_average) {
+  if (vote_average > 7) {
     elt.style['color'] = 'green';
-  } 
+  }
   if (vote_average < 7 && vote_average > 4.5) {
     elt.style['color'] = 'orange';
   } else {

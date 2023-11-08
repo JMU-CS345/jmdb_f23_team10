@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <header class="main-header">
-        <nav class="nav main-nav">
+<header class="main-header">
+    <nav class="nav main-nav">
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const homeLink = document.getElementById("home-link");
-            
+
                 // Add a click event listener to the logo
                 homeLink.addEventListener("click", function () {
                     // Redirect to the first page
                     window.location.href = "http://127.0.0.1:5501/site/index.html";
                 });
             });
-          </script>
-        </nav>
-    </header>
+        </script>
+    </nav>
+</header>
+
 <head>
     <title>Movie Details</title>
     <link rel="stylesheet" type="text/css" href="moviepage_style.css"> <!-- Link to the movie-specific CSS file -->
@@ -24,16 +25,19 @@
     <meta charset="utf-8" />
     <header>
         <div id="logo-container">
-                <img src="logo.jpg" alt="testing" id="home-link" width="150" height="150">
-                <h1 id="site-title">JMDB</h1>
-            </div>
-      </header>
+            <img src="logo.jpg" alt="testing" id="home-link" width="150" height="150">
+            <h1 id="site-title">JMDB</h1>
+        </div>
+    </header>
 </head>
 
 <body>
     <div class="movie-container2">
         <div id="movie-container2">
             <!-- Movie results will be displayed here after a search -->
+        </div>
+        <div id="cast-container">
+            <!-- Cast information will be displayed here -->
         </div>
     </div>
 </body>
