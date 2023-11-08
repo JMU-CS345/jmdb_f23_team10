@@ -1,4 +1,10 @@
-const movieContainer = document.getElementById('movie-container2');
+const API_KEY = "api_key=f61be177e52665e7c5e6973bb615e517";
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
+
+
+const movieContainer2 = document.getElementById('movie-container2');
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -27,37 +33,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const { title, poster_path, vote_average, overview } = movie;
 
     const movieDiv = document.createElement('div');
-    movieDiv.classList.add('movie2');
+    movieDiv.classList.add('movie');
 
-    const titleElement = document.createElement("h1");
-    titleElement.textContent = title;
-    titleElement.classList.add("movie-title"); // Add a class for styling
-
-
-    const img = document.createElement("img");
-    img.width = 350;
+    const img = document.createElement('img');
     img.src = IMG_URL + poster_path;
     img.alt = title;
-    img.classList.add("movie-poster");
 
-    const ratingElement = document.createElement("strong");
-    ratingElement.innerText = `Rating: ${vote_average}`;
-    ratingElement.classList.add("movie-rating"); // Add a class for styling
+    const movieInfo = document.createElement('div');
+    movieInfo.classList.add('movie-info');
 
+    const titleHeading = document.createElement('h3');
+    titleHeading.innerText = title;
 
-    const overviewElement = document.createElement("p");
-    overviewElement.textContent = overview;
-    overviewElement.classList.add("movie-overview"); // Add a class for styling
+    const ratingPara = document.createElement('p');
+    updateColor(ratingPara, vote_average);
+    ratingPara.innerText = `Rating: ${vote_average}`;
 
+    const overviewPara = document.createElement('p');
+    overviewPara.innerText = overview;
 
-    // Apply CSS to wrap text at a specified width
-    overviewElement.style.width = "350px";
-    overviewElement.style.whiteSpace = "pre-wrap";
-
-    // Display movie details in the page
-    document.body.appendChild(img);
-    document.body.appendChild(titleElement);
-    document.body.appendChild(ratingElement);
-    document.body.appendChild(overviewElement);
+    movieInfo.appendChild(titleHeading);
+    movieInfo.appendChild(ratingPara);
+    movieDiv.appendChild(movieInfo);
+    movieInfo.appendChild(img);
+    movieContainer2.appendChild(movieDiv);
   }
 });
+
+function updateColor(elt ,vote_average) {
+  if (vote_average > 7){
+    elt.style['color'] = 'green';
+  } 
+  if (vote_average < 7 && vote_average > 4.5) {
+    elt.style['color'] = 'orange';
+  } else {
+    elt.style['color'] = 'green';
+  }
+}

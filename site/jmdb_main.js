@@ -76,8 +76,6 @@ function showMovies(data) {
 
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
-    
-
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
 
