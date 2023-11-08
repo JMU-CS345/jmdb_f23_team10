@@ -25,17 +25,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const titleElement = document.createElement("h1");
     titleElement.textContent = title;
+    titleElement.classList.add("movie-title"); // Add a class for styling
+
 
     const img = document.createElement("img");
     img.width = 350;
     img.src = IMG_URL + poster_path;
     img.alt = title;
+    img.classList.add("movie-poster");
 
     const ratingElement = document.createElement("strong");
     ratingElement.innerText = `Rating: ${vote_average}`;
+    ratingElement.classList.add("movie-rating"); // Add a class for styling
+
 
     const overviewElement = document.createElement("p");
     overviewElement.textContent = overview;
+    overviewElement.classList.add("movie-overview"); // Add a class for styling
+
 
     // Apply CSS to wrap text at a specified width
     overviewElement.style.width = "350px";

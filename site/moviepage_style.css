@@ -1,50 +1,91 @@
-body,h1,h2,h3,p {
+/* style.css */
+*{
+    box-sizing: border-box;
+    color: #777;
+}
+/* Reset some default styles for a cleaner slate */
+body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
 }
 
-
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
-
-.search-bar {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-#search-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-}
-
-#search-button {
-    padding: 10px 20px;
-    background-color: #007BFF;
+header {
+    background-color: #333;
     color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 20px;
+    text-align: center;
 }
 
-#search-button:hover {
-    background-color: #0056b3;
+nav {
+    background-color: #444;
 }
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+nav li {
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+main {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-details-container {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex-basis: 48%;
+}
+
+.movie-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.movie-poster {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.movie-rating {
+    font-size: 18px;
+    color: #ff9900;
+    margin-bottom: 10px;
+}
+
+.movie-overview {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
