@@ -13,20 +13,34 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(`${BASE_URL}movie/${movieId}?${API_KEY}`)
       .then((response) => response.json())
       .then((movie) => {
-        displayMovieDetails(movie);
+        fetchActorDetails(movie);
       })
       .catch((error) => {
         console.error("Error fetching movie details:", error);
       });
   }
 
-  function displayMovieDetails(movie) {
+  function fetchActorDetails(movie) {
+    // Retrieve the list of actors for the movie
+    const movieCreditsURL = `${BASE_URL}movie/${movie.id}/credits?${API_KEY}`;
+
+    fetch(movieCreditsURL)
+      .then((response) => response.json())
+      .then((credits) => {
+        displayMovieDetails(movie, credits);
+      })
+      .catch((error) => {
+        console.error("Error fetching actor details:", error);
+      });
+  }
+
+  function displayMovieDetails(movie, credits) {
     const { title, poster_path, vote_average, overview } = movie;
+    const actors = credits.cast;
 
     const titleElement = document.createElement("h1");
     titleElement.textContent = title;
-    titleElement.classList.add("movie-title"); // Add a class for styling
-
+    titleElement.classList.add("movie-title");
 
     const img = document.createElement("img");
     img.width = 350;
@@ -36,22 +50,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const ratingElement = document.createElement("strong");
     ratingElement.innerText = `Rating: ${vote_average}`;
-    ratingElement.classList.add("movie-rating"); // Add a class for styling
-
+    ratingElement.classList.add("movie-rating");
 
     const overviewElement = document.createElement("p");
     overviewElement.textContent = overview;
-    overviewElement.classList.add("movie-overview"); // Add a class for styling
-
-
-    // Apply CSS to wrap text at a specified width
+    overviewElement.classList.add("movie-overview");
     overviewElement.style.width = "350px";
     overviewElement.style.whiteSpace = "pre-wrap";
 
-    // Display movie details in the page
+    // Create a section to display actor information
+    const actorSection = document.createElement("div");
+    actorSection.classList.add("actor-section");
+
+    actors.forEach((actor) => {
+      const actorDiv = document.createElement("div");
+      actorDiv.classList.add("actor");
+
+      const actorName = document.createElement("h3");
+      actorName.innerText = actor.name;
+      actorName.classList.add("actor-name");
+
+      const actorPhoto = document.createElement("img");
+      actorPhoto.width = 250;
+      actorPhoto.src = IMG_URL + actor.profile_path;
+      actorPhoto.alt = actor.name;
+      actorPhoto.classList.add("actor-photo");
+
+      actorDiv.appendChild(actorName);
+      actorDiv.appendChild(actorPhoto);
+
+      actorSection.appendChild(actorDiv);
+    });
+
+    // Display movie details and actor information in the page
     document.body.appendChild(img);
     document.body.appendChild(titleElement);
     document.body.appendChild(ratingElement);
     document.body.appendChild(overviewElement);
+    document.body.appendChild(actorSection);
   }
 });
+
