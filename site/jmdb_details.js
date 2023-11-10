@@ -5,7 +5,7 @@ const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
 
 
 const movieContainer2 = document.getElementById('movie-container2');
-
+const castContainer = document.getElementById("cast-container");
 
 document.addEventListener("DOMContentLoaded", function () {
   const movieDetailButton = document.getElementById("movie-detail");
@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     movieInfo.appendChild(ratingPara);
     movieDiv.appendChild(movieInfo);
     movieInfo.appendChild(img);
+    movieDiv.appendChild(overviewPara);
     movieContainer2.appendChild(movieDiv);
   }
 
@@ -73,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayCastDetails(cast) {
-    const castContainer = document.getElementById("cast-container");
 
     cast.forEach((actor) => {
       const { name, profile_path } = actor;

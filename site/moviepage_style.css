@@ -74,6 +74,22 @@ header {
     display: block;
 }
 
+#cast-container{
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.actor img{
+    width: 50%;
+    height: 400px;
+    object-fit: cover;
+}
+
 footer {
     background-color: #333;
     color: #fff;
