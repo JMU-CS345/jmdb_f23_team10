@@ -9,7 +9,7 @@ const movieContainer = document.getElementById('movie-container');
 
 const movieDetail = document.getElementById('movie-detail');
 getMovies(API_URL);
-fetchCastDetails()
+
 
 function getMovies(url) {
   fetch(url)
