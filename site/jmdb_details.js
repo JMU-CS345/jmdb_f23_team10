@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch and display movie details when the button is clicked
     fetchMovieDetails(movieId);
     fetchCastDetails(movieId); // Fetch cast details
+    displayFavoriteButton(movieId);
   }
 
   function fetchMovieDetails(movieId) {
@@ -93,6 +94,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
       castContainer.appendChild(actorDiv);
     });
+  }
+
+  function displayFavoriteButton(movieId) {
+    const favoriteButtonContainer = document.getElementById("favorite-button-container");
+
+    // Check if the user is logged in
+    const isLoggedIn = true; // Replace with authentication check
+
+    if (isLoggedIn) {
+      const favorites = getFavorites();
+      const isMovieInFavorites = favorites.includes(movieId);
+
+      const favoriteButton = document.createElement("button");
+      favoriteButton.innerText = isMovieInFavorites ? "Remove from Favorites" : "Add to Favorites";
+      favoriteButton.addEventListener("click", function () {
+        toggleFavoriteStatus(movieId);
+        displayFavoriteButton(movieId); // Update button text after toggle
+      });
+
+      favoriteButtonContainer.innerHTML = ''; // Clear existing content
+      favoriteButtonContainer.appendChild(favoriteButton);
+    }
+  }
+
+  function toggleFavoriteStatus(movieId) {
+    const favorites = getFavorites();
+    const isMovieInFavorites = favorites.includes(movieId);
+
+    if (isMovieInFavorites) {
+      // Remove the movie from favorites
+      const updatedFavorites = favorites.filter((id) => id !== movieId);
+      setFavorites(updatedFavorites);
+      alert("Movie removed from favorites!");
+    } else {
+      // Add the movie to favorites
+      favorites.push(movieId);
+      setFavorites(favorites);
+      alert("Movie added to favorites!");
+    }
+  }
+
+  function getFavorites() {
+    return JSON.parse(localStorage.getItem("favorites")) || [];
+  }
+
+
+  function setFavorites(favorites) {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 });
 
