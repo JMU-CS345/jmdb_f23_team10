@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const isMovieInFavorites = favorites.includes(movieId);
 
       const favoriteButton = document.createElement("button");
-      favoriteButton.innerText = isMovieInFavorites ? "Remove from Favorites" : "Add to Favorites";
+      favoriteButton.innerText = isMovieInFavorites ? "Remove movie from Favorites" : "Add movie to Favorites";
       favoriteButton.addEventListener("click", function () {
         toggleFavoriteStatus(movieId);
         displayFavoriteButton(movieId); // Update button text after toggle
