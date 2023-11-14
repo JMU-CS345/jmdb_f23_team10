@@ -7,13 +7,13 @@
 
 .header{
     width: 100%;
-    height: 90px;
-    display: block;
-    background-color: #a45ee5;
+    height: 100px;
+    display: flex;
+    background-color: #f2f2f2;
 }
 
 .inner_header{
-    width: 800px;
+    width: 150px;
     height: 100%;
     display: block;
     margin: 0 auto;
@@ -22,21 +22,18 @@
 .logo_container{
     height: 100%;
     display: table;
-    float: left;
+    float: c;
 }
 
 .logo_container h1{
-    color: #f2f2f2;
+    color: #a45ee5;
     height: 100%;
-    display: table-cell;
-    vertical-align: middle;
+    display: table;
+    float: c;
+    text-align: center;
     font-family: 'Rammetto';
-    font-size: 42px;
+    font-size: 60px;
     font-weight: 200;
-}
-
-.logo_container h1 span{
-    font-weight: 800;
 }
 
 .navigation{
@@ -52,14 +49,14 @@
 }
 
 .navigation a:last-child{
-    padding-right: 0;
+    padding-right: 20px;
 }
 
 .navigation a li{
     display: table-cell;
     vertical-align: middle;
     height: 100%;
-    color: #f2f2f2;
+    color: #a45ee5;
     font-family: "Rammetto";
     font-size: 21px;
 }
