@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html>
-<header class="main-header">
-    <nav class="nav main-nav">
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const homeLink = document.getElementById("home-link");
-
-                // Add a click event listener to the logo
-                homeLink.addEventListener("click", function () {
-                    // Redirect to the first page
-                    window.location.href = "http://127.0.0.1:5501/site/index.html";
-                });
-            });
-        </script>
-    </nav>
-</header>
-
+<html lang="en">
 <head>
-    <title>Profile Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="profile_page.css">
+    <title>Profile Page</title>
 </head>
-
+<body>
+    <div class="container">
+        <h1>Welcome to Your Movie Profile</h1>
+        <div id="movie-list">
+            <!-- Movie list will be displayed here -->
+        </div>
+    </div>
+    <script src="profile_page.js"></script>
+</body>
 </html>
