@@ -19,11 +19,17 @@ background-color: #1b1b1b;
 <script>
   document.addEventListener("DOMContentLoaded", function () {
       const homeLink = document.getElementById("home-link");
+      const loginButton = document.getElementById("login-button");
   
       // Add a click event listener to the logo
       homeLink.addEventListener("click", function () {
           // Redirect to the first page
           window.location.href = "/site/index.html";
+      });
+
+      loginButton.addEventListener("click", function () {
+        // Redirect to the login page
+        window.location.href = "/site/login.html";
       });
   });
 </script>
@@ -34,6 +40,10 @@ background-color: #1b1b1b;
     <div id="logo-container">
             <img src="logo.png" alt="testing" id="home-link" width="150" height="150">
             <h1 id="site-title">JMDB</h1>
+        </div>
+        <div id="login-container">
+          <!-- Add a login button -->
+          <button id="login-button">Login</button>
         </div>
   </header>
 <script src="apitest.js"></script>
