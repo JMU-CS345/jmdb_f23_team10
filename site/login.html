@@ -39,11 +39,6 @@
                     </div>
 
                     <div class="input-field">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Email">
-                    </div>
-
-                    <div class="input-field">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Password">
                     </div>
@@ -64,7 +59,6 @@ let nameField = document.getElementById("nameField");
 let title = document.getElementById("title");
 
 signinBtn.onclick = function(){
-    nameField.style.maxHeight = "0";
     title.innerHTML = "Sign in";
     signupBtn.classList.add("disable");
     signinBtn.classList.remove("disable");
@@ -78,6 +72,8 @@ signupBtn.onclick = function(){
     signinBtn.classList.add("disable");
 
 }
+
+
 
 </script>
 </body>
