@@ -3,6 +3,12 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styleHeader.css">
+    <script src="apitest.js"></script>
+    <script src="../lib/keyval.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
     <title></title>
 </head>
 <body>
@@ -23,5 +29,18 @@
             </ul>
         </div>
     </div>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for a Movie">
+            <button id="search-button">Search</button>
+        </div>
+        <div id="movie-container">
+            <!-- Movie results will be displayed here after a search -->
+        </div>
+    </div>
+    <script src="jmdb_main.js"></script>
+</body>
+<body>
+    <script src="jmdb_main.js"></script>
 </body>
 </html>

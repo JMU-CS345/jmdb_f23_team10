@@ -1,3 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.header{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: #f2f2f2;
+}
+
+.inner_header{
+    width: 150px;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.logo_container{
+    height: 100%;
+    display: table;
+    float: c;
+}
+
+.logo_container h1{
+    color: #a45ee5;
+    height: 100%;
+    display: table;
+    float: c;
+    text-align: center;
+    font-family: 'Rammetto', cursive;
+    font-size: 69px;
+}
+
+.navigation{
+    float: right;
+    height: 100%;
+}
+
+.navigation a{
+    height: 100%;
+    display: table;
+    float: left;
+    padding: 0px 20px;
+}
+
+.navigation a:last-child{
+    padding-right: 20px;
+}
+
+.navigation li a{
+    display: table-cell;
+    vertical-align: center;
+    height: 100%;
+    color: #a45ee5;
+    font-family: "Rammetto";
+    font-size: 21px;
+}
+
 body, h1, h2, h3, p {
     margin: 0;
     padding: 0;
@@ -18,36 +80,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f2f2f2;
-    padding: 10px;
-}
-
-#logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#home-link {
-    width: 150px;
-    height: 150px;
-}
-
-#site-title {
-    font-family: 'Rammetto One', cursive;
-    font-size: 69px;
-    color: #a45ee5;
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 
 .container-detail {
     width: 150%;
