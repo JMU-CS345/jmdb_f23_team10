@@ -62,25 +62,62 @@
     </div>
 
     <script>
+        class UserInfo {
+            constructor() {
+                this.userMap = new Map;
+            }
+
+            registerUser(username, password) {
+                if (!this.userMap.has(username)) {
+                    this.userMap.set(username, password);
+                    alert('Account Registered')
+                } else {
+                    alert("Username Already Exist you stinky")
+                }
+            }
+
+            authenticateUser(username, password) {
+                const storedPassword = this.userData.get(username);
+                if (storedPassword && storePassword == password) {
+                    alert('Authentication successful!')
+                } else {
+                    alert("Authentication failed, check User name and password idiot")
+                }
+            }
+        }
+        console.log(localStorage);
+        const userHash = new UserInfo();
         let signupBtn = document.getElementById("signupBtn");
         let signinBtn = document.getElementById("signinBtn");
         let nameField = document.getElementById("nameField");
         let title = document.getElementById("title");
         let form = document.getElementById("loginForm");
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 signinBtn.onclick = function(){
     title.innerHTML = "Sign in";
     signupBtn.classList.add("disable");
     signinBtn.classList.remove("disable");
 =======
+=======
+        nameField.style.maxHeight = "0"
+>>>>>>> Stashed changes
         signinBtn.onclick = function () {
             nameField.style.maxHeight = "0";
             title.innerHTML = "Sign in";
             signupBtn.classList.add("disable");
             signinBtn.classList.remove("disable");
+<<<<<<< Updated upstream
 >>>>>>> f36e89c6172c01d74f4fd30d7d42b095e5f070ce
 
+=======
+            function login(email, password) {
+                if (userHash.get(email) == undefined) {
+                    alert('Invalid User PLS SIGN UP');
+                }
+            }
+>>>>>>> Stashed changes
 
         }
 
@@ -89,6 +126,7 @@ signinBtn.onclick = function(){
             title.innerHTML = "Sign up";
             signupBtn.classList.remove("disable");
             signinBtn.classList.add("disable");
+<<<<<<< Updated upstream
         }
 
 <<<<<<< HEAD
@@ -138,6 +176,12 @@ signinBtn.onclick = function(){
             } else {
                 // Show an error message or handle unsuccessful login
                 alert("Invalid username or password");
+=======
+            function createUser(name, email, password) {
+                userHash.insert(email, [name, password]);
+                console.log("Success!")
+                window.location.href = "header.html"
+>>>>>>> Stashed changes
             }
         }
     </script>
