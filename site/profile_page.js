@@ -3,23 +3,19 @@ const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const movieListContainer = document.getElementById("movie-list");
 
     // Sample array of movie IDs from TMDb
-    const movieIds = [123, 456, 789]; // Replace with your actual movie IDs
+    const movieIds = [123, 345, 789]; // Replace with your actual movie IDs
 
     // Display movies in the movie list container
-    showMovies(movieIds);
+    await showMovies(movieIds);
 
     async function showMovies(movieIds) {
         for (const movieId of movieIds) {
-            try {
-                const movie = await fetchMovieDetails(movieId);
-                createMovieItem(movie);
-            } catch (error) {
-                console.error(`Error fetching details for movie ID ${movieId}:`, error);
-            }
+            const movie = await fetchMovieDetails(movieId);
+            createMovieItem(movie);
         }
     }
 
@@ -30,18 +26,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function createMovieItem(movie) {
-        const movieItem = document.createElement("div");
-        movieItem.classList.add("movie-item");
+        const { title, poster_path, id, overview } = movie;
 
-        const titleElement = document.createElement("h3");
-        titleElement.textContent = movie.title;
+        const movieDiv = document.createElement('div');
+        movieDiv.classList.add('movie-item');
 
-        const overviewElement = document.createElement("p");
-        overviewElement.textContent = movie.overview;
+        const img = document.createElement('img');
+        img.src = IMG_URL + poster_path;
+        img.alt = title;
 
-        movieItem.appendChild(titleElement);
-        movieItem.appendChild(overviewElement);
+        const titleElement = document.createElement('h3');
+        titleElement.innerText = title;
 
-        movieListContainer.appendChild(movieItem);
+        const overviewElement = document.createElement('p');
+        overviewElement.innerText = overview;
+
+        movieDiv.appendChild(img);
+        movieDiv.appendChild(titleElement);
+        movieDiv.appendChild(overviewElement);
+
+        movieListContainer.appendChild(movieDiv);
     }
 });
