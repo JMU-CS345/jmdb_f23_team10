@@ -52,32 +52,34 @@
         </div>
     </div>
 
+    <script src="jmdb_main.js"></script>
+
     <script>
-    let signInSecond = false;
-    signinBtn.onclick = function(){
-        title.innerHTML = "Sign in";
-        signupBtn.classList.add("disable");
-        signinBtn.classList.remove("disable")
-        signinBtn.onclick = function(){
-            var username = document.getElementById("nameInput").value;
-            var password = document.getElementById("passwordInput").value;
-            if (localStorage.getItem(username) === password){
-                alert('Login Successful! Redirecting')
-                window.location.href = 'profile_page.html'
-            } else{
-                alert('Invalid Username or Password');
+        let signInSecond = false;
+        signinBtn.onclick = function () {
+            title.innerHTML = "Sign in";
+            signupBtn.classList.add("disable");
+            signinBtn.classList.remove("disable")
+            signinBtn.onclick = function () {
+                var username = document.getElementById("nameInput").value;
+                var password = document.getElementById("passwordInput").value;
+                if (localStorage.getItem(username) === password) {
+                    alert('Login Successful! Redirecting')
+                    window.location.href = 'profile_page.html'
+                } else {
+                    alert('Invalid Username or Password');
+                }
             }
         }
-        }
 
-    signupBtn.onclick = function () {
-        title.innerHTML = "Sign up";
-        signupBtn.classList.remove("disable");
-        signinBtn.classList.add("disable");
-        signupBtn.onclick = function() {
-            var username = document.getElementById("nameInput").value;
-            var password = document.getElementById("passwordInput").value;
-            if (username != null && password != null && localStorage.getItem(username) === null) {
+        signupBtn.onclick = function () {
+            title.innerHTML = "Sign up";
+            signupBtn.classList.remove("disable");
+            signinBtn.classList.add("disable");
+            signupBtn.onclick = function () {
+                var username = document.getElementById("nameInput").value;
+                var password = document.getElementById("passwordInput").value;
+                if (username != null && password != null && localStorage.getItem(username) === null) {
                     // Store the username in local storage
                     localStorage.setItem(username, password);
 
@@ -87,8 +89,8 @@
                     alert('Sign up Failed(its not you its us...)')
                 }
             }
-    }
-    
+        }
+
     </script>
 </body>
 
