@@ -40,18 +40,9 @@
                     </div>
 
                     <div class="input-field">
-<<<<<<< HEAD
-=======
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Email" id="emailInput">
-                    </div>
-
-                    <div class="input-field">
->>>>>>> f36e89c6172c01d74f4fd30d7d42b095e5f070ce
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Password" id="passwordInput">
                     </div>
-                    <p>Lost password <a href="#">Click Here!</a></p>
                 </div>
                 <div class="btn-field">
                     <button type="button" id="signinBtn">Sign in</button>
@@ -62,130 +53,43 @@
     </div>
 
     <script>
-        class UserInfo {
-            constructor() {
-                this.userMap = new Map;
+    let signInSecond = false;
+    signinBtn.onclick = function(){
+        title.innerHTML = "Sign in";
+        signupBtn.classList.add("disable");
+        signinBtn.classList.remove("disable")
+        signinBtn.onclick = function(){
+            var username = document.getElementById("nameInput").value;
+            var password = document.getElementById("passwordInput").value;
+            if (localStorage.getItem(username) === password){
+                alert('Login Successful! Redirecting')
+                window.location.href = 'profile_page.html'
+            } else{
+                alert('Invalid Username or Password');
             }
+        }
+        }
 
-            registerUser(username, password) {
-                if (!this.userMap.has(username)) {
-                    this.userMap.set(username, password);
-                    alert('Account Registered')
+    signupBtn.onclick = function () {
+        title.innerHTML = "Sign up";
+        signupBtn.classList.remove("disable");
+        signinBtn.classList.add("disable");
+        signupBtn.onclick = function() {
+            var username = document.getElementById("nameInput").value;
+            var password = document.getElementById("passwordInput").value;
+            if (username != null && password != null && localStorage.getItem(username) === null) {
+                    // Store the username in local storage
+                    localStorage.setItem(username, password);
+
+                    // Redirect or perform other actions after successful login
+                    alert('Sign up Successful');
                 } else {
-                    alert("Username Already Exist you stinky")
+                    alert('Sign up Failed(its not you its us...)')
                 }
             }
-
-            authenticateUser(username, password) {
-                const storedPassword = this.userData.get(username);
-                if (storedPassword && storePassword == password) {
-                    alert('Authentication successful!')
-                } else {
-                    alert("Authentication failed, check User name and password idiot")
-                }
-            }
-        }
-        console.log(localStorage);
-        const userHash = new UserInfo();
-        let signupBtn = document.getElementById("signupBtn");
-        let signinBtn = document.getElementById("signinBtn");
-        let nameField = document.getElementById("nameField");
-        let title = document.getElementById("title");
-        let form = document.getElementById("loginForm");
-
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-signinBtn.onclick = function(){
-    title.innerHTML = "Sign in";
-    signupBtn.classList.add("disable");
-    signinBtn.classList.remove("disable");
-=======
-=======
-        nameField.style.maxHeight = "0"
->>>>>>> Stashed changes
-        signinBtn.onclick = function () {
-            nameField.style.maxHeight = "0";
-            title.innerHTML = "Sign in";
-            signupBtn.classList.add("disable");
-            signinBtn.classList.remove("disable");
-<<<<<<< Updated upstream
->>>>>>> f36e89c6172c01d74f4fd30d7d42b095e5f070ce
-
-=======
-            function login(email, password) {
-                if (userHash.get(email) == undefined) {
-                    alert('Invalid User PLS SIGN UP');
-                }
-            }
->>>>>>> Stashed changes
-
-        }
-
-        signupBtn.onclick = function () {
-            nameField.style.maxHeight = "60px";
-            title.innerHTML = "Sign up";
-            signupBtn.classList.remove("disable");
-            signinBtn.classList.add("disable");
-<<<<<<< Updated upstream
-        }
-
-<<<<<<< HEAD
-
-
-</script>
-=======
-        signupBtn.addEventListener('click', function () {
-            // Validate form fields (e.g., not empty)
-            /*let nameInput = document.getElementById("nameInput").value;
-            let emailInput = document.getElementById("emailInput").value;
-            let passwordInput = document.getElementById("passwordInput").value;
-
-            if (nameInput.trim() === '' || emailInput.trim() === '' || passwordInput.trim() === '') {
-                alert('Please fill in all fields.');
-                return;
-            }*/
-
-            // Perform signup logic here (e.g., send data to server)
-            alert('Signup logic goes here.');
-        });
-
-        signinBtn.addEventListener('click', function () {
-            // Validate form fields (e.g., not empty)
-            /*let emailInput = document.getElementById("emailInput").value;
-            let passwordInput = document.getElementById("passwordInput").value;
-
-            if (emailInput.trim() === '' || passwordInput.trim() === '') {
-                alert('Please fill in all fields.');
-                return;
-            }*/
-
-            // Perform signin logic here (e.g., send data to server)
-            //alert('Signin logic goes here.');
-            loginUser();
-        });
-
-        function loginUser() {
-            // Perform authentication logic, e.g., check username and password
-            const email = document.getElementById("emailInput").value;
-            const password = document.getElementById("passwordInput").value;
-
-            // Replace the following condition with your actual authentication logic
-            if (email === "obrie2ac@dukes.jmu.edu" && password === "Aidan04") {
-                // Redirect to the profile page upon successful login
-                window.location.href = "profile_page.html";
-            } else {
-                // Show an error message or handle unsuccessful login
-                alert("Invalid username or password");
-=======
-            function createUser(name, email, password) {
-                userHash.insert(email, [name, password]);
-                console.log("Success!")
-                window.location.href = "header.html"
->>>>>>> Stashed changes
-            }
-        }
+    }
+    
     </script>
->>>>>>> f36e89c6172c01d74f4fd30d7d42b095e5f070ce
 </body>
 
 </html>
