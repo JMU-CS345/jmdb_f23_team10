@@ -66,8 +66,8 @@
                 var username = document.getElementById("nameInput").value;
                 var password = document.getElementById("passwordInput").value;
                 if (localStorage.getItem(username) === password) {
+                    window.location.href = 'profile_page.html';
                     alert('Login Successful! Redirecting')
-                    window.location.href = 'profile_page.html'
                 } else {
                     alert('Invalid Username or Password');
                 }
