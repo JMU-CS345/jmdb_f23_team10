@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     const movieListContainer = document.getElementById("movie-list");
 
     // Sample array of movie IDs from TMDb
-    const movieIds = [123, 345, 789]; // Replace with your actual movie IDs
+    const movieIds = [123, 236, 789]; // Replace with your actual movie IDs
 
     // Display movies in the movie list container
-    await showMovies(movieIds);
+    await showFavoriteMovies(movieIds);
 
-    async function showMovies(movieIds) {
+    async function showFavoriteMovies(movieIds) {
         for (const movieId of movieIds) {
             const movie = await fetchMovieDetails(movieId);
             createMovieItem(movie);
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     function createMovieItem(movie) {
-        const { title, poster_path, id, overview } = movie;
+        const { title, poster_path, id} = movie;
 
         const movieDiv = document.createElement('div');
         movieDiv.classList.add('movie-item');
@@ -38,12 +38,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         const titleElement = document.createElement('h3');
         titleElement.innerText = title;
 
-        const overviewElement = document.createElement('p');
-        overviewElement.innerText = overview;
-
         movieDiv.appendChild(img);
         movieDiv.appendChild(titleElement);
-        movieDiv.appendChild(overviewElement);
 
         movieListContainer.appendChild(movieDiv);
     }
