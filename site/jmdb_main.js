@@ -19,13 +19,16 @@ function getMovies(url) {
       showMovies(data.results);
     });
 }
-
-searchButton.addEventListener('click', performSearch);
-searchInput.addEventListener('keydown', function (event) {
-  if (event.key === 'Enter') {
-    performSearch();
-  }
-});
+if (searchButton != undefined){
+  searchButton.addEventListener('click', performSearch);
+}
+if (searchInput != undefined){
+  searchInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      performSearch();
+    }
+  });
+}
 
 function performSearch() {
   const searchTerm = searchInput.value;
@@ -79,8 +82,9 @@ function showMovies(data) {
     movieInfo.appendChild(ratingPara);
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
-
-    movieContainer.appendChild(movieDiv);
+    if (movieContainer != undefined){
+      movieContainer.appendChild(movieDiv);
+    }
   });
 
 }
