@@ -62,34 +62,39 @@
             title.innerHTML = "Sign in";
             signupBtn.classList.add("disable");
             signinBtn.classList.remove("disable")
-            signinBtn.onclick = function () {
-                var username = document.getElementById("nameInput").value;
-                var password = document.getElementById("passwordInput").value;
-                if (localStorage.getItem(username) === password) {
-                    window.location.href = 'profile_page.html';
-                    alert('Login Successful! Redirecting')
+            var username = document.getElementById("nameInput").value.trim();
+            var password = document.getElementById("passwordInput").value.trim();
+                if (username !== '' && password !== ''){
+                    signinBtn.onclick =
+                        main.get(username, function(res){
+                            alert('Sign in Successful Redirecting...');
+                            window.location.href = 'profile_page.html';
+                        }, function(res){
+                            alert('Sign in Failed Retry');
+                        })
                 } else {
-                    alert('Invalid Username or Password');
+                    alert('Please Enter a Valid Username and Password.');
                 }
-            }
         }
+        
 
         signupBtn.onclick = function () {
             title.innerHTML = "Sign up";
             signupBtn.classList.remove("disable");
             signinBtn.classList.add("disable");
-            signupBtn.onclick = function () {
-                var username = document.getElementById("nameInput").value;
-                var password = document.getElementById("passwordInput").value;
-                if (username != null && password != null && localStorage.getItem(username) === null) {
-                    // Store the username in local storage
-                    localStorage.setItem(username, password);
-
-                    // Redirect or perform other actions after successful login
-                    alert('Sign up Successful');
-                } else {
-                    alert('Sign up Failed(its not you its us...)')
+            var username = document.getElementById("nameInput").value;
+            var password = document.getElementById("passwordInput").value;
+            if (username !== '' && password !== ''){
+                signupBtn.onclick = function(){
+                    main.set(username, password, function(res){
+                        alert('Sign up Successful Redirecting...');
+                        window.location.href = 'profile_page.html';
+                    }, function(res){
+                        alert('Sign up Failed(Its not you its us...)' + error);
+                    });
                 }
+            } else {
+                alert('Sign up Failed Please Enter a Valid Username and Passowrd.');
             }
         }
 
