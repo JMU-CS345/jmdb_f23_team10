@@ -78,20 +78,6 @@ body {
     font-weight: 1000px;
 }
 
-.container {
-    width: 1200px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.move-list img {
-    width: 300px;
-    height: auto;
-    display: block;
-}
-
 .movie h3 {
     font-size: 28px;
     font-weight: 1000px;
@@ -107,12 +93,12 @@ body {
 
 .movie-item {
     flex: 1;
-    min-width: calc(33.33% - 20px); 
+    min-width: 33.33% - 20px;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
