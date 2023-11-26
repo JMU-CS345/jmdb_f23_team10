@@ -57,7 +57,6 @@
     <script src="jmdb_main.js"></script>
 
     <script>
-        let signInSecond = false;
         signinBtn.onclick = function () {
             title.innerHTML = "Sign in";
             signupBtn.classList.add("disable");
@@ -65,13 +64,7 @@
             var username = document.getElementById("nameInput").value.trim();
             var password = document.getElementById("passwordInput").value.trim();
                 if (username !== '' && password !== ''){
-                    signinBtn.onclick =
-                        main.get(username, function(res){
-                            alert('Sign in Successful Redirecting...');
-                            window.location.href = 'profile_page.html';
-                        }, function(res){
-                            alert('Sign in Failed Retry');
-                        })
+                    signInUser(username, password)
                 } else {
                     alert('Please Enter a Valid Username and Password.');
                 }
@@ -85,14 +78,7 @@
             var username = document.getElementById("nameInput").value;
             var password = document.getElementById("passwordInput").value;
             if (username !== '' && password !== ''){
-                signupBtn.onclick = function(){
-                    main.set(username, password, function(res){
-                        alert('Sign up Successful Redirecting...');
-                        window.location.href = 'profile_page.html';
-                    }, function(res){
-                        alert('Sign up Failed(Its not you its us...)' + error);
-                    });
-                }
+                signUpUser(username, password); 
             } else {
                 alert('Sign up Failed Please Enter a Valid Username and Passowrd.');
             }

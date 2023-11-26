@@ -1,5 +1,6 @@
 
 
+
 document.addEventListener("DOMContentLoaded", async function () {
     const movieListContainer = document.getElementById("movie-list");
 

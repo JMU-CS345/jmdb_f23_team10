@@ -4,6 +4,7 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
 const KEYVAL_API_KEY="EV9B4A3DLp";
 let main = new Keyval(KEYVAL_API_KEY);
+let currentUser;
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -99,3 +100,51 @@ function updateColor(elt ,vote_average) {
     elt.style['color'] = 'green';
   }
 }
+
+
+function signInUser(username, password) {
+  let user = username;
+  fetch(main.url_for(user))
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('User not found - 404 Error');
+        } else {
+          throw new Error('Server error: ' + response.status);
+        }
+      }
+      return response.text();
+    })
+    .then(data => {
+      console.log(data);
+      currentUser = username;
+      window.location.href = 'profile_page.html';
+    })
+    .catch(error => {
+      alert('Username not found or server error');
+      console.error(error.message);
+    });
+}
+
+function signUpUser(username, password){
+  let user = username
+  fetch(main.url_for(user))
+  .then(response => {
+    if (response.status === 404) {
+      throw new Error('Resource not found');
+    }
+  })
+  .then(data => {
+    console.log(data);
+    alert('User Already In Use Please Sign In.');
+  })
+  .catch(error => {
+    main.set(username, password, function(result){
+      alert('Successful Signup Redirecting...');
+      currentUser = username;
+      window.location.href = 'profile_page.html';
+    })
+  });
+}
+
+
