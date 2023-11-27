@@ -103,8 +103,7 @@ function updateColor(elt ,vote_average) {
 
 
 function signInUser(username, password) {
-  let user = username;
-  fetch(main.url_for(user))
+  fetch(main.url_for(username))
     .then(response => {
       if (!response.ok) {
         if (response.status === 404) {
@@ -113,12 +112,17 @@ function signInUser(username, password) {
           throw new Error('Server error: ' + response.status);
         }
       }
-      return response.text();
+      return response.json();
     })
     .then(data => {
       console.log(data);
       currentUser = username;
-      window.location.href = 'profile_page.html';
+      if (data.key2 === password){
+        localStorage.setItem(username);
+        window.location.href = 'profile_page.html';
+      } else{
+        alert('Wrong Password Retry.');
+      }
     })
     .catch(error => {
       alert('Username not found or server error');
@@ -139,9 +143,9 @@ function signUpUser(username, password){
     alert('User Already In Use Please Sign In.');
   })
   .catch(error => {
-    main.set(username, password, function(result){
-      alert('Successful Signup Redirecting...');
-      currentUser = username;
+    const JSONInfo = {key1: username, key2: password};
+    main.set(username, JSON.stringify(JSONInfo), function(res){
+      alert('Sign up Successful Redirecting.');
       window.location.href = 'profile_page.html';
     })
   });
