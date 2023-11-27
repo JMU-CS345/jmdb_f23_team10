@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function setFavorites(favorites) {
+    main.set(currentUser, )
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 });

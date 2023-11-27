@@ -34,6 +34,11 @@
             <!-- Movie list will be displayed here -->
         </div>
     </div>
+    <script>
+        let name = document.getElementById('Insert-User');
+        console.log(getCurrentUser());
+        name.textContent = localStorage.getItem('currentUser');
+    </script>
     <script src="profile_page.js"></script>
 </body>
 

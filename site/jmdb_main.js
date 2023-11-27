@@ -94,10 +94,10 @@ function updateColor(elt ,vote_average) {
   if (vote_average > 7){
     elt.style['color'] = 'green';
   } 
-  if (vote_average < 7 && vote_average > 4.5) {
+  else if (vote_average < 7 && vote_average > 4.5) {
     elt.style['color'] = 'orange';
   } else {
-    elt.style['color'] = 'green';
+    elt.style['color'] = 'red';
   }
 }
 
@@ -115,8 +115,9 @@ function signInUser(username, password) {
     .then(data => {
       console.log(data);
       if (data.key2 === password){
-        currentUser = username;
-        localStorage.setItem(username, data.key1);
+        localStorage.setItem('currentUser', data.key1);
+        currentUser = localStorage.getItem(username);
+        console.log(currentUser);
         window.location.href = 'profile_page.html';
       } else{
         alert('Wrong Password Retry.');
@@ -143,10 +144,13 @@ function signUpUser(username, password){
   .catch(error => {
     const JSONInfo = {key1: username, key2: password};
     main.set(username, JSON.stringify(JSONInfo), function(res){
-      alert('Sign up Successful Redirecting.');
-      window.location.href = 'profile_page.html';
+      alert('Sign up Successful Please Log In.');
+      localStorage.setItem('currentUser', data.key1);
+      currentUser = localStorage.getItem(username);
     })
   });
 }
 
-
+function getCurrentUser(){
+  return currentUser;
+}
