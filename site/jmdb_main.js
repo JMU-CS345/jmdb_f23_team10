@@ -107,16 +107,13 @@ function signInUser(username, password) {
     .then(response => {
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error('User not found - 404 Error');
-        } else {
-          throw new Error('Server error: ' + response.status);
+          throw new Error('User not found');
         }
       }
       return response.json();
     })
     .then(data => {
       console.log(data);
-      currentUser = username;
       if (data.key2 === password){
         localStorage.setItem(username, data.key1);
         window.location.href = 'profile_page.html';
@@ -135,7 +132,7 @@ function signUpUser(username, password){
   fetch(main.url_for(user))
   .then(response => {
     if (response.status === 404) {
-      throw new Error('Resource not found');
+      throw new Error('User not found');
     }
   })
   .then(data => {
