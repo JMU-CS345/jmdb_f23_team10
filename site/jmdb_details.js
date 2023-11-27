@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function displayFavoriteButton(movieId) {
+  /*function displayFavoriteButton(movieId) {
     const favoriteButtonContainer = document.getElementById("favorite-button-container");
 
     // Check if the user is logged in
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function setFavorites(favorites) {
     main.set(currentUser, )
     localStorage.setItem("favorites", JSON.stringify(favorites));
-  }
+  }*/
 });
 
 function updateColor(elt, vote_average) {
