@@ -118,7 +118,7 @@ function signInUser(username, password) {
       console.log(data);
       currentUser = username;
       if (data.key2 === password){
-        localStorage.setItem(username);
+        localStorage.setItem(username, data.key1);
         window.location.href = 'profile_page.html';
       } else{
         alert('Wrong Password Retry.');
