@@ -12,10 +12,6 @@
 </head>
 
 <body>
-    <script>
-        let name = document.getElementById('Insert-User');
-        name.textContent = currentUser;
-    </script>
     <div class="header">
         <a href="header.html">
             <div class="picture">
@@ -42,6 +38,13 @@
         </div>
         <div id="favorite-button-container">
             <!-- Favorite button will be displayed here -->
+        </div>
+        <div class="comment-box">
+            <h2>Comments</h2>
+            <form action="#">
+                <textarea name="comment" id="" cols="30" rows="5" placeholder="Type Your Comment..."></textarea>
+                <button type="submit">Submit Comment</button>
+            </form>
         </div>
     </div>
 

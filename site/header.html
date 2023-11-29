@@ -26,7 +26,7 @@
         </div>
         <div class="inner_header2">
             <ul class="navigation">
-                <li><a href="login.html">Log In</a></li>
+                <li><a id='logInLink' href="login.html">Log In</a></li>
             </ul>
         </div>
     </div>
@@ -40,6 +40,13 @@
         </div>
     </div>
     <script src="jmdb_main.js"></script>
+    <script>
+        let loginStatus = document.getElementById('logInLink');
+        if (localStorage.getItem('currentUser') != null){
+            loginStatus.textContent = 'Profile Page';
+            logInLink.href = 'profile_page.html';
+        }
+    </script>
 </body>
 
 </html>
