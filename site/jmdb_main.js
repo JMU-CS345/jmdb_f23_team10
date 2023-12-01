@@ -129,26 +129,28 @@ function signInUser(username, password) {
 }
 
 function signUpUser(username, password) {
-  let user = username
+  let user = username;
+
   fetch(main.url_for(user))
     .then(response => {
       if (response.status === 404) {
-        throw new Error('User not found');
+        // User doesn't exist, proceed with sign-up
+        const JSONInfo = { key1: username, key2: password, key3: [] };
+        main.set(username, JSON.stringify(JSONInfo), function (res) {
+          alert('Sign up Successful. Please Log In.');
+          localStorage.setItem('currentUser', username);
+          currentUser = localStorage.getItem('currentUser');
+        });
+      } else {
+        // User already exists
+        throw new Error('User Already In Use. Please Sign In.');
       }
     })
-    .then(data => {
-      console.log(data);
-      alert('User Already In Use Please Sign In.');
-    })
     .catch(error => {
-      const JSONInfo = { key1: username, key2: password, key3: [] };
-      main.set(username, JSON.stringify(JSONInfo), function (res) {
-        alert('Sign up Successful Please Log In.');
-        localStorage.setItem('currentUser', data.key1);
-        currentUser = localStorage.getItem(username);
-      })
+      alert(error.message);
     });
 }
+
 
 function getCurrentUser() {
   return currentUser;

@@ -1,14 +1,31 @@
-
-
-
 document.addEventListener("DOMContentLoaded", async function () {
     const movieListContainer = document.getElementById("movie-list");
 
-    // Sample array of movie IDs from TMDb
-    const movieIds = [123, 236, 789]; // Replace with your actual movie IDs
 
-    // Display movies in the movie list container
-    await showFavoriteMovies(movieIds);
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+        try {
+            const userData = await fetchUserData(currentUser);
+            const movieIds = userData.key3 || [];
+
+
+            // Display favorite movies in the movie list container
+            await showFavoriteMovies(movieIds);
+        } catch (error) {
+            alert('Error fetching user data. Please sign in.');
+            console.error(error.message);
+        }
+    }
+
+
+    async function fetchUserData(username) {
+        const response = await fetch(main.url_for(username));
+        if (!response.ok) {
+            throw new Error('User not found');
+        }
+        return response.json();
+    }
+
 
     async function showFavoriteMovies(movieIds) {
         for (const movieId of movieIds) {
@@ -17,27 +34,42 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+
     async function fetchMovieDetails(movieId) {
         const response = await fetch(`${BASE_URL}movie/${movieId}?${API_KEY}`);
-        const movie = await response.json();
-        return movie;
+        if (!response.ok) {
+            throw new Error(`Error fetching movie details for ID ${movieId}`);
+        }
+        return response.json();
     }
 
+
     function createMovieItem(movie) {
-        const { title, poster_path, id} = movie;
+        const { title, poster_path, id } = movie;
+
 
         const movieDiv = document.createElement('div');
         movieDiv.classList.add('movie-item');
+
 
         const img = document.createElement('img');
         img.src = IMG_URL + poster_path;
         img.alt = title;
 
+
+        // Create a link for each movie to navigate to the movie detail page
+        const movieLink = document.createElement('a');
+        movieLink.href = `movie_detail.html?movie_id=${id}`;
+        movieLink.appendChild(img);
+
+
         const titleElement = document.createElement('h3');
         titleElement.innerText = title;
 
-        movieDiv.appendChild(img);
+
+        movieDiv.appendChild(movieLink);
         movieDiv.appendChild(titleElement);
+
 
         movieListContainer.appendChild(movieDiv);
     }
