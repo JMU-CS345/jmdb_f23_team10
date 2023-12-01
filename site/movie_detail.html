@@ -42,16 +42,57 @@
         </div>
         <div class="comment-box">
             <h2>Comments</h2>
-            <form action="#">
-                <textarea name="comment" id="" cols="30" rows="5" placeholder="Type Your Comment..."></textarea>
-                <button type="submit">Submit Comment</button>
+            <form id="comment-form">
+                <textarea name="comment" id="comment-text" cols="30" rows="5" placeholder="Type Your Comment..."></textarea>
+                <button type="button" onclick="submitComment()">Submit Comment</button>
             </form>
+            <div id="comments-list">
+                <!-- Comments will be displayed here -->
+            </div>
         </div>
     </div>
 
     </div>
+    <script src="jmdb_main.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieId = urlParams.get("movie_id");
+        function submitComment() {
+            let submit = document.getElementById('comment-text');
+            let comment = submit.value;
+            let user = localStorage.getItem('currentUser') || 'Anonymous';
+
+            fetch(main.url_for(movieId))
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    const { commentArray } = data;
+                    commentArray.push('User ' + user + ' Says - ' + comment);
+                    console.log(data);
+                    main.set(movieId, JSON.stringify(data), function(res){
+                        alert('comment section updated.');
+                    })                  
+                })
+                .catch(error => {
+                    console.error(error.message);
+                });
+        }
+        let commentSection = document.getElementById('comments-list')
+        fetch(main.url_for(movieId))
+          .then(response =>{
+            return response.json();
+          })
+          .then(data => {
+            const { commentArray } = data;
+            commentArray.forEach(comment => {
+                const p = document.createElement('p');
+                p.textContent = comment;
+                commentSection.appendChild(p);
+            })
+          })
+    </script>
 </body>
-<script src="jmdb_main.js"></script>
 <script src="jmdb_details.js"></script>
 <script>
     let loginStatus = document.getElementById('logInLink');
