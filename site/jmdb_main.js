@@ -2,7 +2,7 @@ const API_KEY = "api_key=f61be177e52665e7c5e6973bb615e517";
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
-const KEYVAL_API_KEY="EV9B4A3DLp";
+const KEYVAL_API_KEY = "EV9B4A3DLp";
 let main = new Keyval(KEYVAL_API_KEY);
 let currentUser;
 
@@ -20,10 +20,10 @@ function getMovies(url) {
       showMovies(data.results);
     });
 }
-if (searchButton != undefined){
+if (searchButton != undefined) {
   searchButton.addEventListener('click', performSearch);
 }
-if (searchInput != undefined){
+if (searchInput != undefined) {
   searchInput.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
       performSearch();
@@ -83,17 +83,17 @@ function showMovies(data) {
     movieInfo.appendChild(ratingPara);
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
-    if (movieContainer != undefined){
+    if (movieContainer != undefined) {
       movieContainer.appendChild(movieDiv);
     }
   });
 
 }
 
-function updateColor(elt ,vote_average) {
-  if (vote_average > 7){
+function updateColor(elt, vote_average) {
+  if (vote_average > 7) {
     elt.style['color'] = 'green';
-  } 
+  }
   else if (vote_average < 7 && vote_average > 4.5) {
     elt.style['color'] = 'orange';
   } else {
@@ -114,11 +114,11 @@ function signInUser(username, password) {
     })
     .then(data => {
       console.log(data);
-      if (data.key2 === password){
+      if (data.key2 === password) {
         localStorage.setItem('currentUser', data.key1);
         window.location.href = 'profile_page.html';
 
-      } else{
+      } else {
         alert('Wrong Password Retry.');
       }
     })
@@ -128,29 +128,29 @@ function signInUser(username, password) {
     });
 }
 
-function signUpUser(username, password){
+function signUpUser(username, password) {
   let user = username
   fetch(main.url_for(user))
-  .then(response => {
-    if (response.status === 404) {
-      throw new Error('User not found');
-    }
-  })
-  .then(data => {
-    console.log(data);
-    alert('User Already In Use Please Sign In.');
-  })
-  .catch(error => {
-    const JSONInfo = {key1: username, key2: password};
-    main.set(username, JSON.stringify(JSONInfo), function(res){
-      alert('Sign up Successful Please Log In.');
-      localStorage.setItem('currentUser', data.key1);
-      currentUser = localStorage.getItem(username);
+    .then(response => {
+      if (response.status === 404) {
+        throw new Error('User not found');
+      }
     })
-  });
+    .then(data => {
+      console.log(data);
+      alert('User Already In Use Please Sign In.');
+    })
+    .catch(error => {
+      const JSONInfo = { key1: username, key2: password, key3: [] };
+      main.set(username, JSON.stringify(JSONInfo), function (res) {
+        alert('Sign up Successful Please Log In.');
+        localStorage.setItem('currentUser', data.key1);
+        currentUser = localStorage.getItem(username);
+      })
+    });
 }
 
-function getCurrentUser(){
+function getCurrentUser() {
   return currentUser;
 }
 

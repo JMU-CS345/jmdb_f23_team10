@@ -72,75 +72,134 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function displayCastDetails(cast) {
     cast.forEach((actor) => {
-        const { id, name, profile_path } = actor;
+      const { id, name, profile_path } = actor;
 
-        const actorDiv = document.createElement("div");
-        actorDiv.classList.add('actor');
-        actorDiv.dataset.actorId = id; // Set the actor_id in the dataset
+      const actorDiv = document.createElement("div");
+      actorDiv.classList.add('actor');
+      actorDiv.dataset.actorId = id; // Set the actor_id in the dataset
 
-        const actorImg = document.createElement('img');
-        actorImg.src = IMG_URL + profile_path;
-        actorImg.alt = name;
+      const actorImg = document.createElement('img');
+      actorImg.src = IMG_URL + profile_path;
+      actorImg.alt = name;
 
-        const actorName = document.createElement('p');
-        actorName.innerText = name;
+      const actorName = document.createElement('p');
+      actorName.innerText = name;
 
-        actorDiv.appendChild(actorImg);
-        actorDiv.appendChild(actorName);
+      actorDiv.appendChild(actorImg);
+      actorDiv.appendChild(actorName);
 
-        castContainer.appendChild(actorDiv);
+      castContainer.appendChild(actorDiv);
     });
-}
+  }
 
 
-  /*function displayFavoriteButton(movieId) {
+  async function displayFavoriteButton(movieId) {
     const favoriteButtonContainer = document.getElementById("favorite-button-container");
 
+
     // Check if the user is logged in
-    const isLoggedIn = true; // Replace with authentication check
+    const isLoggedIn = localStorage.getItem('currentUser') != null;
+
 
     if (isLoggedIn) {
-      const favorites = getFavorites();
-      const isMovieInFavorites = favorites.includes(movieId);
+      try {
+        const favorites = await getFavorites();
+        const isMovieInFavorites = favorites.includes(movieId);
 
-      const favoriteButton = document.createElement("button");
-      favoriteButton.innerText = isMovieInFavorites ? "Remove movie from Favorites" : "Add movie to Favorites";
-      favoriteButton.addEventListener("click", function () {
-        toggleFavoriteStatus(movieId);
-        displayFavoriteButton(movieId); // Update button text after toggle
-      });
 
-      favoriteButtonContainer.innerHTML = ''; // Clear existing content
-      favoriteButtonContainer.appendChild(favoriteButton);
+        const favoriteButton = document.createElement("button");
+        favoriteButton.innerText = isMovieInFavorites ? "Remove movie from Favorites" : "Add movie to Favorites";
+        favoriteButton.addEventListener("click", async function () {
+          await toggleFavoriteStatus(movieId);
+          displayFavoriteButton(movieId); // Update button text after toggle
+        });
+
+
+        favoriteButtonContainer.innerHTML = ''; // Clear existing content
+        favoriteButtonContainer.appendChild(favoriteButton);
+      } catch (error) {
+        console.error('Error displaying favorite button:', error);
+      }
     }
   }
 
-  function toggleFavoriteStatus(movieId) {
-    const favorites = getFavorites();
+
+  async function getFavorites() {
+    const currentUser = localStorage.getItem('currentUser');
+
+
+    if (currentUser) {
+      try {
+        const userData = await fetchUserData(currentUser);
+        return userData.key3 || [];
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        return [];
+      }
+    } else {
+      console.error('User not signed in.');
+      return [];
+    }
+  }
+
+
+  async function fetchUserData(username) {
+    const response = await fetch(main.url_for(username));
+    if (!response.ok) {
+      throw new Error('User not found');
+    }
+    return response.json();
+  }
+
+
+  async function toggleFavoriteStatus(movieId) {
+    const favorites = await getFavorites();
     const isMovieInFavorites = favorites.includes(movieId);
+
 
     if (isMovieInFavorites) {
       // Remove the movie from favorites
       const updatedFavorites = favorites.filter((id) => id !== movieId);
-      setFavorites(updatedFavorites);
+      await setFavorites(updatedFavorites);
       alert("Movie removed from favorites!");
     } else {
       // Add the movie to favorites
-      favorites.push(movieId);
-      setFavorites(favorites);
+      const updatedFavorites = [...favorites, movieId];
+      await setFavorites(updatedFavorites);
       alert("Movie added to favorites!");
     }
   }
 
-  function getFavorites() {
-    return JSON.parse(localStorage.getItem("favorites")) || [];
+
+  async function setFavorites(updatedFavorites) {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const userKey = main.url_for(currentUser);
+
+
+      try {
+        const userData = await fetchUserData(currentUser);
+        userData.key3 = updatedFavorites;
+
+
+        await fetch(userKey, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+
+
+        alert("Movie favorites updated successfully!");
+      } catch (error) {
+        alert('Error updating movie favorites');
+        console.error(error);
+      }
+    } else {
+      alert('User not signed in. Please sign in.');
+    }
   }
-
-
-  function setFavorites(favorites) {
-    main.set(currentUser, )
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }*/
 });
 
 function updateColor(elt, vote_average) {
@@ -158,24 +217,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // ... existing code
 
   function createActorLink(actorId) {
-      const actorLink = document.createElement('a');
-      actorLink.href = `actor_details.html?actor_id=${actorId}`;
-      return actorLink;
+    const actorLink = document.createElement('a');
+    actorLink.href = `actor_details.html?actor_id=${actorId}`;
+    return actorLink;
   }
 
   // Add event listener to actor containers within the cast container
   const castContainer = document.getElementById('cast-container');
   castContainer.addEventListener('click', function (event) {
-      const actorContainer = event.target.closest('.actor');
-      if (actorContainer) {
-          // If the clicked element is an actor container, prevent the default behavior (navigation)
-          event.preventDefault();
+    const actorContainer = event.target.closest('.actor');
+    if (actorContainer) {
+      // If the clicked element is an actor container, prevent the default behavior (navigation)
+      event.preventDefault();
 
-          // Get the actor_id from the actor container's dataset
-          const actorId = actorContainer.dataset.actorId;
+      // Get the actor_id from the actor container's dataset
+      const actorId = actorContainer.dataset.actorId;
 
-          // Navigate to the actor details page
-          window.location.href = `actor_details.html?actor_id=${actorId}`;
-      }
+      // Navigate to the actor details page
+      window.location.href = `actor_details.html?actor_id=${actorId}`;
+    }
   });
 });
