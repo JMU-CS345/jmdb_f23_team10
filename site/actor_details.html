@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Actor Details</title>
+    <link rel="stylesheet" type="text/css" href="moviepage_style.css"> <!-- Reference your CSS file here -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div class="header">
+        <a href="header.html">
+            <div class="picture">
+                <img src="logo.png" alt="testing" id="logo" width="100" height="100">
+            </div>
+        </a>
+        <div class="inner_header">
+            <div class="logo_container">
+                <h1>JMDB</h1>
+            </div>
+        </div>
+        <div class="inner_header2">
+            <ul class="navigation">
+                <li><a href="login.html">Log In</a></li>
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+            </ul>
+        </div>
+    </div>
+    <div class="container-detail">
+        <div id="actor-container">
+            <!-- Actor details will be displayed here -->
+        </div>
+    </div>
+</body>
+<script src="jmdb_main.js"></script>
+<script src="jmdb_details.js"></script>
+</html>

@@ -26,6 +26,7 @@
         <div class="inner_header2">
             <ul class="navigation">
                 <li><a href="login.html">Log In</a></li>
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
             </ul>
         </div>
     </div>
@@ -93,6 +94,20 @@
     </script>
 </body>
 <script src="jmdb_details.js"></script>
+<script>
+    let loginStatus = document.getElementById('logInLink');
+    if (localStorage.getItem('currentUser') != null){
+        loginStatus.textContent = 'Profile Page';
+        loginStatus.href = 'profile_page.html';
+    }
+    function signOutBtn(){
+        if(localStorage.getItem('currentUser') != null){
+            localStorage.clear();
+            loginStatus.textContent = 'Log In';
+            loginStatus.href = 'login.html';
+            href="header.html";
+        }
 
-
+    }
+</script>
 </html>

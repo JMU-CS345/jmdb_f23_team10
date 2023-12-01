@@ -25,6 +25,7 @@
         <div class="inner_header2">
             <ul class="navigation">
                 <li><a id= 'logInLink' href="login.html">Log In</a></li>
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
             </ul>
         </div>
     </div>
@@ -43,6 +44,15 @@
         if (localStorage.getItem('currentUser') != ''){
             loginStatus.textContent = 'Profile Page';
             logInLink.href = 'profile_page.html';
+        }
+        function signOutBtn(){
+            if(localStorage.getItem('currentUser') != null){
+                localStorage.clear();
+                loginStatus.textContent = 'Log In';
+                loginStatus.href = 'login.html';
+                href='header.html';
+            }
+
         }
     </script>
     <script src="profile_page.js"></script>

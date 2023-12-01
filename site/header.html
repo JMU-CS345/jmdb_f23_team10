@@ -27,6 +27,7 @@
         <div class="inner_header2">
             <ul class="navigation">
                 <li><a id='logInLink' href="login.html">Log In</a></li>
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
             </ul>
         </div>
     </div>
@@ -39,14 +40,23 @@
             <!-- Movie results will be displayed here after a search -->
         </div>
     </div>
-    <script src="jmdb_main.js"></script>
     <script>
         let loginStatus = document.getElementById('logInLink');
         if (localStorage.getItem('currentUser') != null){
             loginStatus.textContent = 'Profile Page';
-            logInLink.href = 'profile_page.html';
+            loginStatus.href = 'profile_page.html';
+        }
+        function signOutBtn(){
+            if(localStorage.getItem('currentUser') != null){
+                localStorage.clear();
+                loginStatus.textContent = 'Log In';
+                loginStatus.href = 'login.html';
+                href="header.html";
+            }
+
         }
     </script>
+    <script src="jmdb_main.js"></script>
 </body>
 
 </html>
