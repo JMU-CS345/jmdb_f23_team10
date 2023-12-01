@@ -100,13 +100,13 @@
         loginStatus.textContent = 'Profile Page';
         loginStatus.href = 'profile_page.html';
     }
-    function signOutBtn() {
-        if (localStorage.getItem('currentUser') != null) {
-            localStorage.clear();
-            loginStatus.textContent = 'Log In';
-            loginStatus.href = 'login.html';
-            href = "header.html";
-        }
+    function signOutBtn(){
+            if(localStorage.getItem('currentUser') != null){
+                localStorage.clear();
+                loginStatus.textContent = 'Log In';
+                loginStatus.href = 'login.html';
+                window.location.href='header.html';
+            }
 
     }
 </script>
