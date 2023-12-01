@@ -71,26 +71,27 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayCastDetails(cast) {
-
     cast.forEach((actor) => {
-      const { name, profile_path } = actor;
+        const { id, name, profile_path } = actor;
 
-      const actorDiv = document.createElement("div");
-      actorDiv.classList.add('actor');
+        const actorDiv = document.createElement("div");
+        actorDiv.classList.add('actor');
+        actorDiv.dataset.actorId = id; // Set the actor_id in the dataset
 
-      const actorImg = document.createElement('img');
-      actorImg.src = IMG_URL + profile_path;
-      actorImg.alt = name;
+        const actorImg = document.createElement('img');
+        actorImg.src = IMG_URL + profile_path;
+        actorImg.alt = name;
 
-      const actorName = document.createElement('p');
-      actorName.innerText = name;
+        const actorName = document.createElement('p');
+        actorName.innerText = name;
 
-      actorDiv.appendChild(actorImg);
-      actorDiv.appendChild(actorName);
+        actorDiv.appendChild(actorImg);
+        actorDiv.appendChild(actorName);
 
-      castContainer.appendChild(actorDiv);
+        castContainer.appendChild(actorDiv);
     });
-  }
+}
+
 
   /*function displayFavoriteButton(movieId) {
     const favoriteButtonContainer = document.getElementById("favorite-button-container");
@@ -152,3 +153,29 @@ function updateColor(elt, vote_average) {
     elt.style['color'] = 'green';
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // ... existing code
+
+  function createActorLink(actorId) {
+      const actorLink = document.createElement('a');
+      actorLink.href = `actor_details.html?actor_id=${actorId}`;
+      return actorLink;
+  }
+
+  // Add event listener to actor containers within the cast container
+  const castContainer = document.getElementById('cast-container');
+  castContainer.addEventListener('click', function (event) {
+      const actorContainer = event.target.closest('.actor');
+      if (actorContainer) {
+          // If the clicked element is an actor container, prevent the default behavior (navigation)
+          event.preventDefault();
+
+          // Get the actor_id from the actor container's dataset
+          const actorId = actorContainer.dataset.actorId;
+
+          // Navigate to the actor details page
+          window.location.href = `actor_details.html?actor_id=${actorId}`;
+      }
+  });
+});
