@@ -222,21 +222,6 @@ document.addEventListener("DOMContentLoaded", function () {
       alert('User not signed in. Please sign in.');
     }
   }
-});
-
-function updateColor(elt, vote_average) {
-  if (vote_average > 7) {
-    elt.style['color'] = 'green';
-  }
-  if (vote_average < 7 && vote_average > 4.5) {
-    elt.style['color'] = 'orange';
-  } else {
-    elt.style['color'] = 'green';
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  // ... existing code
 
   function createActorLink(actorId) {
     const actorLink = document.createElement('a');
@@ -260,3 +245,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+function updateColor(elt, vote_average) {
+  if (vote_average > 7) {
+    elt.style['color'] = 'green';
+  }
+  if (vote_average < 7 && vote_average > 4.5) {
+    elt.style['color'] = 'orange';
+  } else {
+    elt.style['color'] = 'green';
+  }
+}

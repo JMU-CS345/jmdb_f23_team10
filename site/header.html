@@ -33,8 +33,9 @@
     </div>
     <div class="container">
         <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search for a Movie">
+            <input type="text" id="search-input" placeholder="Search">
             <button id="search-button">Search</button>
+            <button id="switch-search-type">Switch to Actor Search</button>
         </div>
         <div id="movie-container">
             <!-- Movie results will be displayed here after a search -->
@@ -42,16 +43,16 @@
     </div>
     <script>
         let loginStatus = document.getElementById('logInLink');
-        if (localStorage.getItem('currentUser') != null){
+        if (localStorage.getItem('currentUser') != null) {
             loginStatus.textContent = 'Profile Page';
             loginStatus.href = 'profile_page.html';
         }
-        function signOutBtn(){
-            if(localStorage.getItem('currentUser') != null){
+        function signOutBtn() {
+            if (localStorage.getItem('currentUser') != null) {
                 localStorage.clear();
                 loginStatus.textContent = 'Log In';
                 loginStatus.href = 'login.html';
-                window.location.href='header.html';
+                window.location.href = 'header.html';
             }
         }
     </script>

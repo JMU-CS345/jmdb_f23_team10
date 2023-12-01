@@ -1,7 +1,8 @@
 const API_KEY = "api_key=f61be177e52665e7c5e6973bb615e517";
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
-const API_URL = BASE_URL + 'movie/popular?' + API_KEY;
+const API_URL_MOVIE = BASE_URL + 'movie/popular?' + API_KEY;
+const API_URL_ACTOR = BASE_URL + 'person/popular?' + API_KEY;
 const KEYVAL_API_KEY = "EV9B4A3DLp";
 let main = new Keyval(KEYVAL_API_KEY);
 let currentUser;
@@ -11,7 +12,8 @@ const searchButton = document.getElementById('search-button');
 const movieContainer = document.getElementById('movie-container');
 
 const movieDetail = document.getElementById('movie-detail');
-getMovies(API_URL);
+getMovies(API_URL_MOVIE);
+getActors(API_URL_ACTOR);
 
 function getMovies(url) {
   fetch(url)
@@ -20,6 +22,15 @@ function getMovies(url) {
       showMovies(data.results);
     });
 }
+
+function getActors(url) {
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      showActors(data.results);
+    })
+}
+
 if (searchButton != undefined) {
   searchButton.addEventListener('click', performSearch);
 }
@@ -37,18 +48,34 @@ function performSearch() {
   movieContainer.innerHTML = '';
 
   if (searchTerm) {
-    const searchURL = `${BASE_URL}search/movie?${API_KEY}&query=${searchTerm}`;
+    if (isSearchingForMovies) {
+      // Perform movie search
+      const searchURL = `${BASE_URL}search/movie?${API_KEY}&query=${searchTerm}`;
 
-    fetch(searchURL)
-      .then((response) => response.json())
-      .then((data) => {
-        showMovies(data.results);
-      })
-      .catch((error) => {
-        console.error('An error occurred:', error);
-      });
+      fetch(searchURL)
+        .then((response) => response.json())
+        .then((data) => {
+          showMovies(data.results);
+        })
+        .catch((error) => {
+          console.error('An error occurred:', error);
+        });
+    } else {
+      // Perform actor search
+      const searchURL = `${BASE_URL}search/actor?${API_KEY}&query=${searchTerm}`;
+
+      fetch(searchURL)
+        .then((response) => response.json())
+        .then((data) => {
+          showActors(data.results);
+        })
+        .catch((error) => {
+          console.error('An error occurred:', error);
+        });
+    }
   }
 }
+
 
 function showMovies(data) {
   data.forEach((movie) => {
@@ -87,8 +114,65 @@ function showMovies(data) {
       movieContainer.appendChild(movieDiv);
     }
   });
-
 }
+
+const switchSearchTypeButton = document.getElementById('switch-search-type');
+switchSearchTypeButton.addEventListener('click', switchSearchType);
+
+// Variable to keep track of the current search type
+let isSearchingForMovies = true;
+
+function switchSearchType() {
+  isSearchingForMovies = !isSearchingForMovies;
+
+  // Update the button text based on the current search type
+  switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
+
+  // Clear the previous search results
+  movieContainer.innerHTML = '';
+
+  // Perform a search based on the new search type
+  if (isSearchingForMovies) {
+    // Perform movie search
+    getMovies(API_URL_MOVIE);
+  } else {
+    getActors(API_URL_ACTOR);
+  }
+}
+
+// Function to show actor search results
+function showActors(data) {
+  data.forEach((actor) => {
+    const { name, profile_path, id } = actor;
+
+    const actorDiv = document.createElement('div');
+    actorDiv.classList.add('actor');
+
+    const img = document.createElement('img');
+    img.src = IMG_URL + profile_path;
+    img.alt = name;
+
+    // Create a link for each actor to navigate to the actor detail page
+    const actorLink = document.createElement('a');
+    actorLink.href = `actor_details.html?actor_id=${id}`;
+    actorLink.appendChild(img);
+
+    const actorInfo = document.createElement('div');
+    actorInfo.classList.add('actor-info');
+
+    const nameHeading = document.createElement('h3');
+    nameHeading.innerText = name;
+
+    actorInfo.appendChild(nameHeading);
+    actorDiv.appendChild(actorLink);
+    actorDiv.appendChild(actorInfo);
+
+    if (movieContainer != undefined) {
+      movieContainer.appendChild(actorDiv);
+    }
+  });
+}
+
 
 function updateColor(elt, vote_average) {
   if (vote_average > 7) {
