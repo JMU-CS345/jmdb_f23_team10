@@ -102,6 +102,10 @@ body {
     padding: 10px;
 }
 
+.movie-content {
+    display: flex;
+}
+
 #cast-container {
     display: flex;
     flex-direction: row;

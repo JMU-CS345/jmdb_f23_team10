@@ -7,12 +7,27 @@ document.addEventListener("DOMContentLoaded", function () {
   const movieDetailButton = document.getElementById("movie-detail");
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get("movie_id");
-
+  fetch(main.url_for(movieId))
+  .then(response => {
+    if (response.status === 404) {
+      throw new Error('Server not set');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('d', data);
+  })
+  .catch(error => {
+    const JSONArray = {commentArray: []};
+    main.set(movieId, JSON.stringify(JSONArray), function(res){
+    })
+    console.error(error.message);
+  });
   if (movieId) {
     // Fetch and display movie details when the button is clicked
     fetchMovieDetails(movieId);
     fetchCastDetails(movieId); // Fetch cast details
-    displayFavoriteButton(movieId);
+    //displayFavoriteButton(movieId);
   }
 
   function fetchMovieDetails(movieId) {
@@ -47,14 +62,21 @@ document.addEventListener("DOMContentLoaded", function () {
     updateColor(ratingPara, vote_average);
     ratingPara.innerText = `Rating: ${vote_average}`;
 
+    const movieContent = document.createElement('div');
+    movieContent.classList.add('movie-content');
     const overviewPara = document.createElement('p');
+
+    movieContent.appendChild(img);
+    movieContent.appendChild(overviewPara);
+
     overviewPara.innerText = overview;
 
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
     movieDiv.appendChild(movieInfo);
-    movieInfo.appendChild(img);
-    movieDiv.appendChild(overviewPara);
+    movieDiv.appendChild(movieContent);
+    //movieInfo.appendChild(img);
+    //movieDiv.appendChild(overviewPara);
     movieContainer2.appendChild(movieDiv);
   }
 
@@ -152,3 +174,5 @@ function updateColor(elt, vote_average) {
     elt.style['color'] = 'green';
   }
 }
+
+
