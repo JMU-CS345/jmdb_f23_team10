@@ -143,34 +143,32 @@ function switchSearchType() {
 // Function to show actor search results
 function showActors(data) {
   data.forEach((actor) => {
-    const { name, profile_path, id, popularity } = actor;
+    const { name, profile_path, id } = actor;
 
     const actorDiv = document.createElement('div');
     actorDiv.classList.add('actor');
 
-    if (popularity >= 1) {
-      const img = document.createElement('img');
-      img.src = IMG_URL + profile_path;
-      img.alt = name;
+    const img = document.createElement('img');
+    img.src = IMG_URL + profile_path;
+    img.alt = name;
 
-      // Create a link for each actor to navigate to the actor detail page
-      const actorLink = document.createElement('a');
-      actorLink.href = `actor_details.html?actor_id=${id}`;
-      actorLink.appendChild(img);
+    // Create a link for each actor to navigate to the actor detail page
+    const actorLink = document.createElement('a');
+    actorLink.href = `actor_details.html?actor_id=${id}`;
+    actorLink.appendChild(img);
 
-      const actorInfo = document.createElement('div');
-      actorInfo.classList.add('actor-info');
+    const actorInfo = document.createElement('div');
+    actorInfo.classList.add('actor-info');
 
-      const nameHeading = document.createElement('h3');
-      nameHeading.innerText = name;
+    const nameHeading = document.createElement('h3');
+    nameHeading.innerText = name;
 
-      actorInfo.appendChild(nameHeading);
-      actorDiv.appendChild(actorLink);
-      actorDiv.appendChild(actorInfo);
+    actorInfo.appendChild(nameHeading);
+    actorDiv.appendChild(actorLink);
+    actorDiv.appendChild(actorInfo);
 
-      if (movieContainer != undefined) {
-        movieContainer.appendChild(actorDiv);
-      }
+    if (movieContainer != undefined) {
+      movieContainer.appendChild(actorDiv);
     }
   });
 }
