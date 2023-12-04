@@ -77,7 +77,6 @@ function performSearch() {
   }
 }
 
-
 function showMovies(data) {
   data.forEach((movie) => {
     const { title, poster_path, vote_average, overview, id } = movie;
@@ -159,7 +158,10 @@ if (switchSearchTypeButton != null) {
 
 // Function to show actor search results
 function showActors(data) {
-  data.forEach((actor) => {
+  // Filter out actors with popularity less than 1
+  const filteredActors = data.filter(actor => actor.popularity >= 1);
+
+  filteredActors.forEach((actor) => {
     const { name, profile_path, id } = actor;
 
     const actorDiv = document.createElement('div');
@@ -190,7 +192,6 @@ function showActors(data) {
   });
 }
 
-
 function updateColor(elt, vote_average) {
   if (vote_average > 7) {
     elt.style['color'] = 'green';
@@ -201,7 +202,6 @@ function updateColor(elt, vote_average) {
     elt.style['color'] = 'red';
   }
 }
-
 
 function signInUser(username, password) {
   fetch(main.url_for(username))
@@ -251,7 +251,6 @@ function signUpUser(username, password) {
       alert(error.message);
     });
 }
-
 
 function getCurrentUser() {
   return currentUser;

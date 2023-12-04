@@ -61,43 +61,31 @@
     <script src="jmdb_main.js"></script>
 
     <script>
-        // Function to handle login and signup actions
-        function handleSignInSignUp(isSignIn) {
-            title.innerHTML = isSignIn ? "Sign in" : "Sign up";
-            signupBtn.classList.toggle("disable", isSignIn);
-            signinBtn.classList.toggle("disable", !isSignIn);
-
+        signinBtn.onclick = function () {
+            title.innerHTML = "Sign in";
+            signupBtn.classList.add("disable");
+            signinBtn.classList.remove("disable")
             var username = document.getElementById("nameInput").value.trim();
             var password = document.getElementById("passwordInput").value.trim();
-
             if (username !== '' && password !== '') {
-                if (isSignIn) {
-                    signInUser(username, password);
-                } else {
-                    signUpUser(username, password);
-                }
+                signInUser(username, password)
             } else {
                 alert('Please Enter a Valid Username and Password.');
             }
         }
 
-        // Click event for Sign In button
-        signinBtn.onclick = function () {
-            handleSignInSignUp(true);
-        }
-
-        // Click event for Sign Up button
         signupBtn.onclick = function () {
-            handleSignInSignUp(false);
-        }
-
-        // Listen for 'keydown' event on the password input
-        passwordInput.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                // Enter key pressed, trigger the corresponding action
-                handleSignInSignUp(!signupBtn.classList.contains("disable"));
+            title.innerHTML = "Sign up";
+            signupBtn.classList.remove("disable");
+            signinBtn.classList.add("disable");
+            var username = document.getElementById("nameInput").value;
+            var password = document.getElementById("passwordInput").value;
+            if (username !== '' && password !== '') {
+                signUpUser(username, password);
+            } else {
+                alert('Sign up Failed Please Enter a Valid Username and Passowrd.');
             }
-        });
+        }
     </script>
     <script>
         let loginStatus = document.getElementById('logInLink');
