@@ -1,6 +1,7 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const actorContainer = document.getElementById('actor-container');
+const actorContainer = document.getElementById('actor-container');
+const actorMoviesContainer = document.getElementById('actor-movies-container');
 
+document.addEventListener("DOMContentLoaded", function () {
     // Get actor ID from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const actorId = urlParams.get('actor_id');
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (actorId) {
         // Fetch and display actor details when the page is loaded
         fetchActorDetails(actorId);
+        fetchActorMovies(actorId);
     }
 
     function fetchActorDetails(actorId) {
@@ -41,14 +43,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const popularityPara = document.createElement('p');
         popularityPara.innerText = `Popularity: ${popularity}`;
 
+        const actorContent = document.createElement('div');
+        actorContent.classList.add('actor-content');
+
         const biographyPara = document.createElement('p');
+        biographyPara.innerText = biography;
+        biographyPara.classList.add('actor-biography');
+
+        actorContent.appendChild(img);
+        actorContent.appendChild(biographyPara);
+
         biographyPara.innerText = biography;
 
         actorInfo.appendChild(nameHeading);
         actorInfo.appendChild(popularityPara);
-        actorDiv.appendChild(img);
         actorDiv.appendChild(actorInfo);
-        actorDiv.appendChild(biographyPara);
+        actorDiv.appendChild(actorContent);
 
         actorContainer.appendChild(actorDiv);
     }

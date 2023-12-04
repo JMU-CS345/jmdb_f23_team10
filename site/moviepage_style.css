@@ -1,11 +1,15 @@
-*{
+* {
     margin: 0;
     padding: 0;
     list-style: none;
     text-decoration: none;
 }
 
-body, h1, h2, h3, p {
+body,
+h1,
+h2,
+h3,
+p {
     margin: 0;
     padding: 0;
 }
@@ -15,7 +19,7 @@ body {
     background-color: #f2f2f2;
 }
 
-.header{
+.header {
     width: 100%;
     height: 100px;
     display: flex;
@@ -23,7 +27,7 @@ body {
     background-color: #f2f2f2;
 }
 
-.inner_header{
+.inner_header {
     flex: 1;
     height: 100%;
     display: flex;
@@ -31,12 +35,12 @@ body {
     justify-content: center;
 }
 
-.logo_container{
+.logo_container {
     display: flex;
     align-items: center;
 }
 
-.logo_container h1{
+.logo_container h1 {
     color: #a45ee5;
     text-align: center;
     font-family: 'Rammetto';
@@ -44,7 +48,7 @@ body {
     margin-left: 10px;
 }
 
-.navigation{
+.navigation {
     flex: 1;
     height: 100%;
     display: flex;
@@ -52,18 +56,18 @@ body {
     justify-content: flex-end;
 }
 
-.navigation a{
+.navigation a {
     height: 100%;
     display: flex;
     align-items: center;
     padding: 0px 20px;
 }
 
-.navigation a:last-child{
+.navigation a:last-child {
     padding-right: 20px;
 }
 
-.navigation li a{
+.navigation li a {
     display: table-cell;
     vertical-align: center;
     height: 100%;
@@ -80,22 +84,26 @@ body {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    text-align: left;
 }
 
 .movie {
     flex: 1;
-    min-width: calc(33.33% - 20px); 
+    min-width: calc(33.33% - 20px);
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
 }
 
 .movie img {
     width: 50%;
     height: auto;
     display: block;
+    margin: 10px;
+    border-radius: 5px;
 }
 
 .movie .movie-info {
@@ -104,6 +112,32 @@ body {
 
 .movie-content {
     display: flex;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.movie-overview {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    margin: 10px;
+}
+
+.movie-info {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+.movie-info p {
+    color: #333;
+    font-weight: bold;
+}
+
+.movie-info h3,
+.movie-info p {
+    margin-bottom: 5px;
 }
 
 #cast-container {
@@ -116,7 +150,7 @@ body {
 .actor {
     display: flex;
     flex-direction: row;
-    min-width: calc(33.33% - 20px); 
+    min-width: calc(33.33% - 20px);
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;

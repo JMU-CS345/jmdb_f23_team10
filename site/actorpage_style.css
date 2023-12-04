@@ -76,51 +76,17 @@ body {
     font-size: 21px;
 }
 
-.container {
-    width: 80%;
+.container-detail {
+    width: 150%;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    text-align: left;
 }
 
-.search-bar {
-    display: flex;
-    margin-bottom: 20px;
-}
-
-#search-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-}
-
-#search-button {
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#search-button:hover {
-    background-color: #0056b3;
-}
-
-#movie-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.movie,
 .actor {
     flex: 1;
     min-width: calc(33.33% - 20px);
@@ -129,45 +95,90 @@ body {
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
 }
 
-.movie img,
 .actor img {
-    width: 100%;
+    width: 50%;
     height: auto;
     display: block;
+    margin: 10px;
+    border-radius: 5px;
 }
 
-.movie .movie-info,
 .actor .actor-info {
     padding: 10px;
 }
 
-.movie h3,
-.actor h3 {
+.actor-content {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.actor-biography {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+    margin: 10px;
+}
+
+.actor-info {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+
+.actor-info p {
+    color: #333;
+    font-weight: bold;
+}
+
+.actor-info h3,
+.actor-info p {
+    margin-bottom: 5px;
+}
+
+#actor-movies-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 20px;
+}
+
+.movie {
+    display: flex;
+    flex-direction: row;
+    min-width: calc(33.33% - 20px);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.movie img {
+    width: 50%;
+    height: auto;
+    display: block;
+}
+
+.movie h3 {
     font-size: 18px;
     margin-bottom: 10px;
 }
 
-.movie p,
-.actor p {
+.movie p {
     font-size: 18px;
     margin-bottom: 10px;
     font-weight: bold;
     line-height: 1.5;
 }
 
-#switch-search-type {
-    background-color: #a45ee5;
+footer {
+    background-color: #333;
     color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-#switch-search-type:hover {
-    background-color: #7f3da5;
+    text-align: center;
+    padding: 10px;
 }

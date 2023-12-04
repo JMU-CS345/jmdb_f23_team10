@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styleHeader.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,12 +28,12 @@
         </div>
         <div class="inner_header2">
             <ul class="navigation">
-                    <li><a id= 'logInLink' href="login.html">Log In</a></li>
-                    <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
-                </ul>
-            </div>
+                <li><a id='logInLink' href="login.html">Log In</a></li>
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+            </ul>
         </div>
-        
+    </div>
+
     </div>
     <div class="container">
         <div class="form-box">
@@ -60,46 +61,56 @@
     <script src="jmdb_main.js"></script>
 
     <script>
-        signinBtn.onclick = function () {
-            title.innerHTML = "Sign in";
-            signupBtn.classList.add("disable");
-            signinBtn.classList.remove("disable")
+        // Function to handle login and signup actions
+        function handleSignInSignUp(isSignIn) {
+            title.innerHTML = isSignIn ? "Sign in" : "Sign up";
+            signupBtn.classList.toggle("disable", isSignIn);
+            signinBtn.classList.toggle("disable", !isSignIn);
+
             var username = document.getElementById("nameInput").value.trim();
             var password = document.getElementById("passwordInput").value.trim();
-                if (username !== '' && password !== ''){
-                    signInUser(username, password)
-                } else {
-                    alert('Please Enter a Valid Username and Password.');
-                }
-        }
-        
 
-        signupBtn.onclick = function () {
-            title.innerHTML = "Sign up";
-            signupBtn.classList.remove("disable");
-            signinBtn.classList.add("disable");
-            var username = document.getElementById("nameInput").value;
-            var password = document.getElementById("passwordInput").value;
-            if (username !== '' && password !== ''){
-                signUpUser(username, password); 
+            if (username !== '' && password !== '') {
+                if (isSignIn) {
+                    signInUser(username, password);
+                } else {
+                    signUpUser(username, password);
+                }
             } else {
-                alert('Sign up Failed Please Enter a Valid Username and Passowrd.');
+                alert('Please Enter a Valid Username and Password.');
             }
         }
 
+        // Click event for Sign In button
+        signinBtn.onclick = function () {
+            handleSignInSignUp(true);
+        }
+
+        // Click event for Sign Up button
+        signupBtn.onclick = function () {
+            handleSignInSignUp(false);
+        }
+
+        // Listen for 'keydown' event on the password input
+        passwordInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                // Enter key pressed, trigger the corresponding action
+                handleSignInSignUp(!signupBtn.classList.contains("disable"));
+            }
+        });
     </script>
     <script>
         let loginStatus = document.getElementById('logInLink');
-        if (localStorage.getItem('currentUser') != null){
+        if (localStorage.getItem('currentUser') != null) {
             loginStatus.textContent = 'Profile Page';
             loginStatus.href = 'profile_page.html';
         }
-        function signOutBtn(){
-            if(localStorage.getItem('currentUser') != null){
+        function signOutBtn() {
+            if (localStorage.getItem('currentUser') != null) {
                 localStorage.clear();
                 loginStatus.textContent = 'Log In';
                 loginStatus.href = 'login.html';
-                window.location.href='header.html';
+                window.location.href = 'header.html';
             }
         }
     </script>

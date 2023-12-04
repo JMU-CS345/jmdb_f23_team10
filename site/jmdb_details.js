@@ -1,5 +1,3 @@
-
-
 const movieContainer2 = document.getElementById('movie-container2');
 const castContainer = document.getElementById("cast-container");
 
@@ -64,7 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const movieContent = document.createElement('div');
     movieContent.classList.add('movie-content');
+
     const overviewPara = document.createElement('p');
+    overviewPara.innerText = overview;
+    overviewPara.classList.add('movie-overview');
 
     movieContent.appendChild(img);
     movieContent.appendChild(overviewPara);
@@ -75,10 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
     movieInfo.appendChild(ratingPara);
     movieDiv.appendChild(movieInfo);
     movieDiv.appendChild(movieContent);
-    //movieInfo.appendChild(img);
-    //movieDiv.appendChild(overviewPara);
     movieContainer2.appendChild(movieDiv);
   }
+
 
   function fetchCastDetails(movieId) {
     // Make an API request to get cast details for the movie
@@ -118,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
   async function displayFavoriteButton(movieId) {
     const favoriteButtonContainer = document.getElementById("favorite-button-container");
 
-
     // Check if the user is logged in
     const isLoggedIn = localStorage.getItem('currentUser') != null;
 
@@ -127,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         const favorites = await getFavorites();
         const isMovieInFavorites = favorites.includes(movieId);
-
 
         const favoriteButton = document.createElement("button");
         favoriteButton.innerText = isMovieInFavorites ? "Remove movie from Favorites" : "Add movie to Favorites";
@@ -148,7 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function getFavorites() {
     const currentUser = localStorage.getItem('currentUser');
-
 
     if (currentUser) {
       try {
@@ -178,7 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const favorites = await getFavorites();
     const isMovieInFavorites = favorites.includes(movieId);
 
-
     if (isMovieInFavorites) {
       // Remove the movie from favorites
       const updatedFavorites = favorites.filter((id) => id !== movieId);
@@ -198,11 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (currentUser) {
       const userKey = main.url_for(currentUser);
 
-
       try {
         const userData = await fetchUserData(currentUser);
         userData.key3 = updatedFavorites;
-
 
         await fetch(userKey, {
           method: 'PUT',
@@ -212,8 +206,6 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(userData),
         });
 
-
-        alert("Movie favorites updated successfully!");
       } catch (error) {
         alert('Error updating movie favorites');
         console.error(error);

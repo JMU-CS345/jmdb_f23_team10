@@ -13,7 +13,8 @@ const movieContainer = document.getElementById('movie-container');
 
 const movieDetail = document.getElementById('movie-detail');
 getMovies(API_URL_MOVIE);
-getActors(API_URL_ACTOR);
+
+const switchSearchTypeButton = document.getElementById('switch-search-type');
 
 function getMovies(url) {
   fetch(url)
@@ -28,7 +29,7 @@ function getActors(url) {
     .then((response) => response.json())
     .then((data) => {
       showActors(data.results);
-    })
+    });
 }
 
 if (searchButton != undefined) {
@@ -62,7 +63,7 @@ function performSearch() {
         });
     } else {
       // Perform actor search
-      const searchURL = `${BASE_URL}search/actor?${API_KEY}&query=${searchTerm}`;
+      const searchURL = `${BASE_URL}search/person?${API_KEY}&query=${searchTerm}`;
 
       fetch(searchURL)
         .then((response) => response.json())
@@ -116,17 +117,28 @@ function showMovies(data) {
   });
 }
 
-const switchSearchTypeButton = document.getElementById('switch-search-type');
-switchSearchTypeButton.addEventListener('click', switchSearchType);
+if (switchSearchTypeButton != null) {
+  switchSearchTypeButton.addEventListener('click', switchSearchType);
+}
 
-// Variable to keep track of the current search type
+// Add a variable to keep track of the current search type
 let isSearchingForMovies = true;
 
+// Update the search bar placeholder based on the current search type
+function updateSearchBarPlaceholder() {
+  const searchInput = document.getElementById('search-input');
+  searchInput.placeholder = isSearchingForMovies ? 'Search Movies' : 'Search Actors';
+}
+
+// Modify your switchSearchType function to update the search bar placeholder
 function switchSearchType() {
   isSearchingForMovies = !isSearchingForMovies;
 
   // Update the button text based on the current search type
   switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
+
+  // Update the search bar placeholder
+  updateSearchBarPlaceholder();
 
   // Clear the previous search results
   movieContainer.innerHTML = '';
@@ -138,6 +150,11 @@ function switchSearchType() {
   } else {
     getActors(API_URL_ACTOR);
   }
+}
+
+if (switchSearchTypeButton != null) {
+  // Call updateSearchBarPlaceholder to set the initial placeholder
+  updateSearchBarPlaceholder();
 }
 
 // Function to show actor search results
@@ -239,5 +256,3 @@ function signUpUser(username, password) {
 function getCurrentUser() {
   return currentUser;
 }
-
-
