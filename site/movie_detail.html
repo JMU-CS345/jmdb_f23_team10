@@ -57,27 +57,59 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const movieId = urlParams.get("movie_id");
+
+        function renderComments(commentArray) {
+            commentSection.innerHTML = '';
+            commentArray.forEach(comment => {
+                const commentContainer = document.createElement('div');
+                commentContainer.classList.add('comment-container');
+                
+                const [username, userComment] = comment.split('Says - ');
+
+                const usernameElement = document.createElement('p');
+                usernameElement.classList.add('comment-username');
+                usernameElement.textContent = username;
+
+                const commentTextElement = document.createElement('p');
+                commentTextElement.textContent = userComment || comment;
+
+                commentContainer.appendChild(usernameElement);
+                commentContainer.appendChild(commentTextElement);
+
+                commentSection.appendChild(commentContainer);
+                });
+        }
+
         function submitComment() {
             let submit = document.getElementById('comment-text');
-            let comment = submit.value;
-            let user = localStorage.getItem('currentUser') || 'Anonymous';
-
-            fetch(main.url_for(movieId))
+            if(submit.value.length > 0 && submit.value.length < 100){
+                let comment = submit.value;
+                let user = localStorage.getItem('currentUser') || 'Anonymous';
+                fetch(main.url_for(movieId))
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
                     const { commentArray } = data;
-                    commentArray.push('User ' + user + ' Says - ' + comment);
+                    commentArray.push(user + ' Says - ' + comment);
                     console.log(data);
                     main.set(movieId, JSON.stringify(data), function(res){
                         alert('comment section updated.');
-                    })                  
+                    })    
+                    renderComments(commentArray);
+                    document.getElementById('comment-form').reset();           
                 })
                 .catch(error => {
                     console.error(error.message);
                 });
+            } else if(submit.value.length == 0){
+                alert("comment too short, must contain atleast 1 character");
+            } else if(submit.value.length > 100){
+                alert("comment too long, must be less than 100 charcters");
+            }
+
         }
+
         let commentSection = document.getElementById('comments-list')
         fetch(main.url_for(movieId))
           .then(response =>{
@@ -87,8 +119,7 @@
             const { commentArray } = data;
             commentArray.forEach(comment => {
                 const p = document.createElement('p');
-                p.textContent = comment;
-                commentSection.appendChild(p);
+                renderComments(commentArray);
             })
           })
     </script>
