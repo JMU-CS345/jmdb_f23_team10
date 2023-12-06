@@ -98,11 +98,13 @@ body {
     margin: 10px;
 }
 
-.actor img {
-    width: 50%;
-    height: auto;
+.actor-content > img {
+    /* width: 50%; */
+    margin-bottom: auto;
+    margin-top: 0;
+    object-fit: none;
     display: block;
-    margin: 10px;
+    /*margin: 10px;*/
     border-radius: 5px;
 }
 
