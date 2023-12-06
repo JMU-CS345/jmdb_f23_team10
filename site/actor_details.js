@@ -69,12 +69,15 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`${BASE_URL}person/${actorId}/movie_credits?${API_KEY}`)
             .then((response) => response.json())
             .then((movies) => {
-                displayActorMovies(movies.cast);
+                // Sort movies by popularity (descending order)
+                const sortedMovies = movies.cast.sort((a, b) => b.popularity - a.popularity);
+                displayActorMovies(sortedMovies);
             })
             .catch((error) => {
                 console.error('Error fetching actor movies:', error);
             });
     }
+    
 
     function displayActorMovies(actorMovies) {
         actorMovies.forEach((movie) => {
