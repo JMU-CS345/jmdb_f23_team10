@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayActorMovies(actorMovies) {
         actorMovies.forEach((movie) => {
-            const { title, poster_path } = movie;
+            const { id, title, poster_path } = movie;
 
             const movieDiv = document.createElement('div');
             movieDiv.classList.add('movie');
@@ -89,6 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
             const img = document.createElement('img');
             img.src = IMG_URL + poster_path;
             img.alt = title;
+
+            movieDiv.addEventListener('click', () => {
+                console.log(`Clicked on movie with ID: ${movie.id}`);
+                window.location.href = `movie_detail.html?movie_id=${id}`;
+            });
 
             const movieInfo = document.createElement('div');
             movieInfo.classList.add('movie-info');
