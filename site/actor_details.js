@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (actorId) {
         // Fetch and display actor details when the page is loaded
         fetchActorDetails(actorId);
+        // Fetch and display actor movies when the page is loaded
         fetchActorMovies(actorId);
     }
 
@@ -61,5 +62,45 @@ document.addEventListener("DOMContentLoaded", function () {
         actorDiv.appendChild(actorContent);
 
         actorContainer.appendChild(actorDiv);
+    }
+
+    function fetchActorMovies(actorId) {
+        // Make an API request to get movies that the actor has been in
+        fetch(`${BASE_URL}person/${actorId}/movie_credits?${API_KEY}`)
+            .then((response) => response.json())
+            .then((movies) => {
+                // Sort movies by popularity (descending order)
+                const sortedMovies = movies.cast.sort((a, b) => b.popularity - a.popularity);
+                displayActorMovies(sortedMovies);
+            })
+            .catch((error) => {
+                console.error('Error fetching actor movies:', error);
+            });
+    }
+    
+
+    function displayActorMovies(actorMovies) {
+        actorMovies.forEach((movie) => {
+            const { title, poster_path } = movie;
+
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+
+            const img = document.createElement('img');
+            img.src = IMG_URL + poster_path;
+            img.alt = title;
+
+            const movieInfo = document.createElement('div');
+            movieInfo.classList.add('movie-info');
+
+            const titleHeading = document.createElement('h3');
+            titleHeading.innerText = title;
+
+            movieInfo.appendChild(titleHeading);
+            movieDiv.appendChild(img);
+            movieDiv.appendChild(movieInfo);
+
+            actorMoviesContainer.appendChild(movieDiv);
+        });
     }
 });
