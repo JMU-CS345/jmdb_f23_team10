@@ -122,6 +122,8 @@ body {
     line-height: 1.5;
     color: #555;
     margin: 10px;
+    overflow-y: auto;
+    max-height: 750px;
 }
 
 .movie-info {
