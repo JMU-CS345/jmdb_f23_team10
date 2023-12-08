@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const movieListContainer = document.getElementById("movie-list");
 
     const currentUser = localStorage.getItem('currentUser');
+
     if (currentUser) {
         try {
             const userData = await fetchUserData(currentUser);
@@ -14,21 +15,26 @@ document.addEventListener("DOMContentLoaded", async function () {
                 noMoviesMessage.classList.add('no-movies-message'); // Add a class for styling
                 movieListContainer.replaceWith(noMoviesMessage);
             } else {
-                // Display favorite movies in the movie list container
                 await showFavoriteMovies(movieIds);
             }
         } catch (error) {
+            console.error('Error fetching user data. Please sign in.', error);
             alert('Error fetching user data. Please sign in.');
-            console.error(error.message);
         }
     }
 
     async function fetchUserData(username) {
         const response = await fetch(main.url_for(username));
+
         if (!response.ok) {
-            throw new Error('User not found');
+            throw new Error(`User not found. Status: ${response.status}`);
         }
-        return response.json();
+        const userData = await response.json();
+
+        // Reverse the order of movies
+        userData.key3 = userData.key3.reverse();
+
+        return userData;
     }
 
     async function showFavoriteMovies(movieIds) {
@@ -40,14 +46,16 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchMovieDetails(movieId) {
         const response = await fetch(`${BASE_URL}movie/${movieId}?${API_KEY}`);
+
         if (!response.ok) {
-            throw new Error(`Error fetching movie details for ID ${movieId}`);
+            throw new Error(`Error fetching movie details for ID ${movieId}. Status: ${response.status}`);
         }
+
         return response.json();
     }
 
     function createMovieItem(movie) {
-        const { title, poster_path, id } = movie;
+        const { title, poster_path, vote_average, overview, id } = movie;
 
         const movieDiv = document.createElement('div');
         movieDiv.classList.add('movie-item');
@@ -61,12 +69,26 @@ document.addEventListener("DOMContentLoaded", async function () {
         movieLink.href = `movie_detail.html?movie_id=${id}`;
         movieLink.appendChild(img);
 
-        const titleElement = document.createElement('h3');
-        titleElement.innerText = title;
+        const movieInfo = document.createElement('div');
+        movieInfo.classList.add('movie-info');
 
+        const titleHeading = document.createElement('h3');
+        titleHeading.innerText = title;
+
+        const ratingPara = document.createElement('p');
+        updateColor(ratingPara, vote_average);
+        ratingPara.innerText = `Rating: ${vote_average}`;
+
+        const overviewPara = document.createElement('p');
+        overviewPara.innerText = overview;
+
+        movieInfo.appendChild(titleHeading);
+        movieInfo.appendChild(ratingPara);
         movieDiv.appendChild(movieLink);
-        movieDiv.appendChild(titleElement);
+        movieDiv.appendChild(movieInfo);
 
-        movieListContainer.appendChild(movieDiv);
+        if (movieListContainer !== undefined) {
+            movieListContainer.appendChild(movieDiv);
+        }
     }
 });

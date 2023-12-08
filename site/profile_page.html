@@ -12,18 +12,19 @@
     <title>Profile Page</title>
     <style>
         #logoutLink {
-          /* Reset button styles */
-          border: none;
-          padding: 0;
-          background: none;
-          cursor: pointer;
-          font-family: 'Rammetto';
-          font-size: 20px;
-          color: #9966CC;
-          padding-right: 20px;
-          display: inline; /* Make it inline to match the <a> element */
+            /* Reset button styles */
+            border: none;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            font-family: 'Rammetto';
+            font-size: 20px;
+            color: #9966CC;
+            padding-right: 20px;
+            display: inline;
+            /* Make it inline to match the <a> element */
         }
-      </style>
+    </style>
 </head>
 
 <body>
@@ -48,6 +49,7 @@
     </div>
     <div class="container">
         <h1>Welcome to Your Movie Profile, <span id="Insert-User">Sign In</span></h1>
+        <h2 class="movies-heading">Your Favorited Movies</h2>
         <div id="movie-list">
             <!-- Movie list will be displayed here -->
         </div>
@@ -57,12 +59,9 @@
         console.log(getCurrentUser());
         name.textContent = localStorage.getItem('currentUser');
 
-        let loginStatus = document.getElementById('logInLink');
-        if (localStorage.getItem('currentUser') != '') {
-            loginStatus.textContent = 'Profile Page';
-            logInLink.href = 'profile_page.html';
-        }
         function signOutBtn() {
+            let loginStatus = document.getElementById('logInLink');
+
             if (localStorage.getItem('currentUser') != null) {
                 localStorage.clear();
                 loginStatus.textContent = 'Log In';
@@ -70,6 +69,22 @@
                 window.location.href = 'header.html';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let loginStatus = document.getElementById('logInLink');
+            let logoutButton = document.getElementById('logoutLink');
+
+
+            if (localStorage.getItem('currentUser') != null) {
+                loginStatus.textContent = 'Profile Page';
+                loginStatus.href = 'profile_page.html';
+                // User is logged in, show the "Log Out" button
+                logoutButton.style.display = 'inline-block';
+            } else {
+                // User is not logged in, hide the "Log Out" button
+                logoutButton.style.display = 'none';
+            }
+        });
     </script>
     <script src="profile_page.js"></script>
 </body>

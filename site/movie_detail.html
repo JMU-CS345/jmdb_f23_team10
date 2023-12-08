@@ -11,18 +11,19 @@
     <meta charset="utf-8" />
     <style>
         #logoutLink {
-          /* Reset button styles */
-          border: none;
-          padding: 0;
-          background: none;
-          cursor: pointer;
-          font-family: 'Rammetto';
-          font-size: 20px;
-          color: #9966CC;
-          padding-right: 20px;
-          display: inline; /* Make it inline to match the <a> element */
+            /* Reset button styles */
+            border: none;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            font-family: 'Rammetto';
+            font-size: 20px;
+            color: #9966CC;
+            padding-right: 20px;
+            display: inline;
+            /* Make it inline to match the <a> element */
         }
-      </style>
+    </style>
 </head>
 
 <body>
@@ -57,7 +58,8 @@
         <div class="comment-box">
             <h2>Comments</h2>
             <form id="comment-form">
-                <textarea name="comment" id="comment-text" cols="30" rows="5" placeholder="Type Your Comment..."></textarea>
+                <textarea name="comment" id="comment-text" cols="30" rows="5"
+                    placeholder="Type Your Comment..."></textarea>
                 <button type="button" onclick="submitComment()">Submit Comment</button>
             </form>
             <div id="comments-list">
@@ -77,7 +79,7 @@
             commentArray.forEach(comment => {
                 const commentContainer = document.createElement('div');
                 commentContainer.classList.add('comment-container');
-                
+
                 const [username, userComment] = comment.split('Says - ');
 
                 const usernameElement = document.createElement('p');
@@ -91,34 +93,34 @@
                 commentContainer.appendChild(commentTextElement);
 
                 commentSection.appendChild(commentContainer);
-                });
+            });
         }
 
         function submitComment() {
             let submit = document.getElementById('comment-text');
-            if(submit.value.length > 0 && submit.value.length < 100){
+            if (submit.value.length > 0 && submit.value.length < 100) {
                 let comment = submit.value;
                 let user = localStorage.getItem('currentUser') || 'Anonymous';
                 fetch(main.url_for(movieId))
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    const { commentArray } = data;
-                    commentArray.push(user + ' Says - ' + comment);
-                    console.log(data);
-                    main.set(movieId, JSON.stringify(data), function(res){
-                        alert('comment section updated.');
-                    })    
-                    renderComments(commentArray);
-                    document.getElementById('comment-form').reset();           
-                })
-                .catch(error => {
-                    console.error(error.message);
-                });
-            } else if(submit.value.length == 0){
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        const { commentArray } = data;
+                        commentArray.push(user + ' Says - ' + comment);
+                        console.log(data);
+                        main.set(movieId, JSON.stringify(data), function (res) {
+                            alert('comment section updated.');
+                        })
+                        renderComments(commentArray);
+                        document.getElementById('comment-form').reset();
+                    })
+                    .catch(error => {
+                        console.error(error.message);
+                    });
+            } else if (submit.value.length == 0) {
                 alert("comment too short, must contain atleast 1 character");
-            } else if(submit.value.length > 100){
+            } else if (submit.value.length > 100) {
                 alert("comment too long, must be less than 100 charcters");
             }
 
@@ -126,34 +128,46 @@
 
         let commentSection = document.getElementById('comments-list')
         fetch(main.url_for(movieId))
-          .then(response =>{
-            return response.json();
-          })
-          .then(data => {
-            const { commentArray } = data;
-            commentArray.forEach(comment => {
-                const p = document.createElement('p');
-                renderComments(commentArray);
+            .then(response => {
+                return response.json();
             })
-          })
+            .then(data => {
+                const { commentArray } = data;
+                commentArray.forEach(comment => {
+                    const p = document.createElement('p');
+                    renderComments(commentArray);
+                })
+            })
     </script>
 </body>
 <script src="jmdb_details.js"></script>
 <script>
-    let loginStatus = document.getElementById('logInLink');
-    if (localStorage.getItem('currentUser') != null) {
-        loginStatus.textContent = 'Profile Page';
-        loginStatus.href = 'profile_page.html';
-    }
-    function signOutBtn(){
-            if(localStorage.getItem('currentUser') != null){
-                localStorage.clear();
-                loginStatus.textContent = 'Log In';
-                loginStatus.href = 'login.html';
-                window.location.href='header.html';
-            }
+    function signOutBtn() {
+        let loginStatus = document.getElementById('logInLink');
 
+        if (localStorage.getItem('currentUser') != null) {
+            localStorage.clear();
+            loginStatus.textContent = 'Log In';
+            loginStatus.href = 'login.html';
+            window.location.href = 'header.html';
+        }
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let loginStatus = document.getElementById('logInLink');
+        let logoutButton = document.getElementById('logoutLink');
+
+
+        if (localStorage.getItem('currentUser') != null) {
+            loginStatus.textContent = 'Profile Page';
+            loginStatus.href = 'profile_page.html';
+            // User is logged in, show the "Log Out" button
+            logoutButton.style.display = 'inline-block';
+        } else {
+            // User is not logged in, hide the "Log Out" button
+            logoutButton.style.display = 'none';
+        }
+    });
 </script>
 
 </html>

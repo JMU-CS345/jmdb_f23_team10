@@ -76,17 +76,30 @@ body {
     font-size: 21px;
 }
 
+.container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+
 .container h1 {
     color: #a45ee5;
     text-align: center;
     font-weight: 1000px;
 }
 
-.movie h3 {
-    font-size: 28px;
-    font-weight: 1000px;
-    margin-bottom: 10px;
+.movies-heading {
+    color: #a45ee5;
     text-align: center;
+    font-size: 24px;
+    /* Adjust the font size as needed */
+    margin-bottom: 20px;
+    /* Adjust the margin as needed */
 }
 
 #movie-list {
@@ -97,14 +110,34 @@ body {
 
 .movie-item {
     flex: 1;
-    min-width: 33.33% - 20px;
+    min-width: calc(33.33% - 20px);
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.movie-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.movie-item .movie-info {
     padding: 10px;
-    text-align: center;
+}
+
+.movie-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.movie-item p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    line-height: 1.5;
 }
 
 .no-movies-message {

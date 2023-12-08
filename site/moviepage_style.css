@@ -135,8 +135,8 @@ body {
     font-weight: bold;
 }
 
-.movie-info h3{
-    margin-bottom: 5px; 
+.movie-info h3 {
+    margin-bottom: 5px;
     font-size: 36px;
     font-weight: bolder;
 }
@@ -145,6 +145,21 @@ body {
 .movie-info p {
     margin-bottom: 5px;
     font-size: 18px;
+}
+
+#favorite-button-container button {
+    background-color: #a45ee5;
+    color: #fff;
+    padding: 5px 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#favorite-button-container button:hover {
+    background-color: #8d3ec1;
 }
 
 #cast-container {
