@@ -102,16 +102,17 @@ body {
 
 #search-button {
     padding: 10px 20px;
-    background-color: #007BFF;
+    background-color: #a45ee5;
     color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 #search-button:hover {
-    background-color: #0056b3;
+    background-color: #7f3da5;
 }
 
 #movie-container {

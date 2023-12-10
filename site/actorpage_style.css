@@ -98,7 +98,7 @@ body {
     margin: 10px;
 }
 
-.actor-content > img {
+.actor-content>img {
     /* width: 50%; */
     margin-bottom: auto;
     margin-top: 0;
@@ -124,6 +124,8 @@ body {
     line-height: 1.5;
     color: #555;
     margin: 10px;
+    overflow-y: auto;
+    max-height: 750px;
 }
 
 .actor-info {

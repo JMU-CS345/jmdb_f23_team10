@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
     movieContainer2.appendChild(movieDiv);
   }
 
-
   function fetchCastDetails(movieId) {
     // Make an API request to get cast details for the movie
     fetch(`${BASE_URL}movie/${movieId}/credits?${API_KEY}`)

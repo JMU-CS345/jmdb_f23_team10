@@ -12,6 +12,21 @@
     <script src="../lib/keyval.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
+    <style>
+        #logoutLink {
+            /* Reset button styles */
+            border: none;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+            font-family: 'Rammetto';
+            font-size: 20px;
+            color: #9966CC;
+            padding-right: 20px;
+            display: inline;
+            /* Make it inline to match the <a> element */
+        }
+    </style>
 </head>
 
 <body>
@@ -88,12 +103,9 @@
         }
     </script>
     <script>
-        let loginStatus = document.getElementById('logInLink');
-        if (localStorage.getItem('currentUser') != null) {
-            loginStatus.textContent = 'Profile Page';
-            loginStatus.href = 'profile_page.html';
-        }
         function signOutBtn() {
+            let loginStatus = document.getElementById('logInLink');
+
             if (localStorage.getItem('currentUser') != null) {
                 localStorage.clear();
                 loginStatus.textContent = 'Log In';
@@ -101,6 +113,22 @@
                 window.location.href = 'header.html';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let loginStatus = document.getElementById('logInLink');
+            let logoutButton = document.getElementById('logoutLink');
+
+
+            if (localStorage.getItem('currentUser') != null) {
+                loginStatus.textContent = 'Profile Page';
+                loginStatus.href = 'profile_page.html';
+                // User is logged in, show the "Log Out" button
+                logoutButton.style.display = 'inline-block';
+            } else {
+                // User is not logged in, hide the "Log Out" button
+                logoutButton.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
