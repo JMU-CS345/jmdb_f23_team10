@@ -76,7 +76,11 @@ function performSearch() {
     }
   } else {
     alert('Must enter something to be searched.');
-    getMovies(API_URL_MOVIE);
+    if (isSearchingForMovies) {
+      getMovies(API_URL_MOVIE);
+    } else {
+      getActors(API_URL_ACTOR);
+    }
   }
 }
 
