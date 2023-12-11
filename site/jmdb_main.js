@@ -85,6 +85,15 @@ function performSearch() {
 }
 
 function showMovies(data) {
+  if (data.length === 0) {
+    // If no movies found, display a message
+    const noResultsMessage = document.createElement('p');
+    noResultsMessage.textContent = 'No movies found.';
+    noResultsMessage.classList.add('no-results-message');
+    movieContainer.appendChild(noResultsMessage);
+    return;
+  }
+
   // Sort movies by rating in descending order
   const sortedMovies = data.sort((a, b) => {
     // Sort by rating in descending order
@@ -198,8 +207,14 @@ if (switchSearchTypeButton != null) {
 
 // Function to show actor search results
 function showActors(data) {
-  // Filter out actors with popularity less than 1
-  //const filteredActors = data.filter(actor => actor.popularity >= 1);
+  if (data.length === 0) {
+    // If no actors found, display a message
+    const noResultsMessage = document.createElement('p');
+    noResultsMessage.textContent = 'No actors found.';
+    noResultsMessage.classList.add('no-results-message');
+    movieContainer.appendChild(noResultsMessage);
+    return;
+  }
 
   // Sort actors by rating in descending order
   const sortedActors = data.sort((a, b) => {
