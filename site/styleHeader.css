@@ -216,3 +216,22 @@ body {
 #switch-search-type:hover {
     background-color: #7f3da5;
 }
+
+.no-results-message {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #555;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+
+    to {
+        opacity: 1;
+    }
+}
