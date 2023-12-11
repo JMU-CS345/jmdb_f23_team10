@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayActorDetails(actor) {
-        const { name, profile_path, biography, popularity, birthday } = actor;
+        const { name, profile_path, biography, popularity, birthday, deathday } = actor;
 
         const actorDiv = document.createElement('div');
         actorDiv.classList.add('actor-details');
@@ -48,6 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
         birthdayPara.innerText = `Birthday: ${formatBirthDate(birthday)}`;
         birthdayPara.classList.add('birth-date');
 
+        const deathdayPara = document.createElement('p');
+        deathdayPara.innerText = `Deathday: ${formatBirthDate(deathday)}`;
+        deathdayPara.classList.add('death-date');
+
         const popularityPara = document.createElement('p');
         actorUpdateColor(popularityPara, popularity);
         popularityPara.innerText = `Popularity: ${Math.floor(popularity)}`;
@@ -68,6 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
         actorInfo.appendChild(popularityPara);
 
         actorDate.appendChild(birthdayPara);
+        if (deathday != null) {
+            actorDate.appendChild(deathdayPara);
+        }
 
         actorDiv.appendChild(actorInfo);
         actorDiv.appendChild(actorDate);
