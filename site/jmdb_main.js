@@ -48,7 +48,7 @@ function performSearch() {
 
   movieContainer.innerHTML = '';
 
-  if (searchTerm) {
+  if (searchTerm.length > 0) {
     if (isSearchingForMovies) {
       // Perform movie search
       const searchURL = `${BASE_URL}search/movie?${API_KEY}&query=${searchTerm}`;
@@ -74,6 +74,9 @@ function performSearch() {
           console.error('An error occurred:', error);
         });
     }
+  } else{
+    alert('Must enter something to be searched.');
+    getMovies(API_URL_MOVIE);
   }
 }
 
