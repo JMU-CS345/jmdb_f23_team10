@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayActorDetails(actor) {
-        const { name, profile_path, biography, popularity } = actor;
+        const { name, profile_path, biography, popularity, birthday } = actor;
 
         const actorDiv = document.createElement('div');
         actorDiv.classList.add('actor-details');
@@ -40,6 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const nameHeading = document.createElement('h1');
         nameHeading.innerText = name;
+
+        const actorDate = document.createElement('div');
+        actorDate.classList.add('actor-date');
+
+        const birthdayPara = document.createElement('p');
+        birthdayPara.innerText = `Birthday: ${formatBirthDate(birthday)}`;
+        birthdayPara.classList.add('birth-date');
 
         const popularityPara = document.createElement('p');
         actorUpdateColor(popularityPara, popularity);
@@ -59,10 +66,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         actorInfo.appendChild(nameHeading);
         actorInfo.appendChild(popularityPara);
+
+        actorDate.appendChild(birthdayPara);
+
         actorDiv.appendChild(actorInfo);
+        actorDiv.appendChild(actorDate);
         actorDiv.appendChild(actorContent);
 
         actorContainer.appendChild(actorDiv);
+    }
+
+    function formatBirthDate(rawDate) {
+        const options = { month: 'short', day: 'numeric', year: 'numeric' };
+        const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
+        return formattedDate;
     }
 
     function fetchActorMovies(actorId) {
@@ -121,9 +138,9 @@ function actorUpdateColor(elt, vote_average) {
     }
     else if (vote_average < 100 && vote_average > 50) {
         elt.style['color'] = 'green';
-    } else if (vote_average < 50 && vote_average > 10){
+    } else if (vote_average < 50 && vote_average > 10) {
         elt.style['color'] = 'orange';
-    } else{
+    } else {
         elt.style['color'] = 'red';
     }
-  }
+}
