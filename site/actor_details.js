@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nameHeading.innerText = name;
 
         const popularityPara = document.createElement('p');
+        actorUpdateColor(popularityPara, popularity);
         popularityPara.innerText = `Popularity: ${Math.floor(popularity)}`;
 
         const actorContent = document.createElement('div');
@@ -109,3 +110,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+function actorUpdateColor(elt, vote_average) {
+    if (vote_average > 100) {
+        elt.style['color'] = 'gold';
+    }
+    else if (vote_average < 100 && vote_average > 50) {
+        elt.style['color'] = 'green';
+    } else if (vote_average < 50 && vote_average > 10){
+        elt.style['color'] = 'orange';
+    } else{
+        elt.style['color'] = 'red';
+    }
+  }
