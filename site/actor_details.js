@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function actorUpdateColor(elt, vote_average) {
     if (vote_average > 100) {
-        elt.style['color'] = 'gold';
+        elt.style['color'] = 'purple';
     }
     else if (vote_average < 100 && vote_average > 50) {
         elt.style['color'] = 'green';
