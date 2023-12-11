@@ -139,6 +139,8 @@ function switchSearchType() {
   // Update the search bar placeholder
   updateSearchBarPlaceholder();
 
+  updatePageTitle();
+
   // Clear the previous search results
   movieContainer.innerHTML = '';
 
@@ -254,4 +256,9 @@ function signUpUser(username, password) {
 
 function getCurrentUser() {
   return currentUser;
+}
+
+function updatePageTitle() {
+  const pageTitle = document.querySelector('#trend');
+  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
 }
