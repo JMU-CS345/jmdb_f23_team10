@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const ratingPara = document.createElement('p');
     updateColor(ratingPara, vote_average);
-    ratingPara.innerText = `Rating: ${vote_average}`;
+    ratingPara.innerText = `Rating: ${Math.floor(vote_average)}`;
 
     const movieContent = document.createElement('div');
     movieContent.classList.add('movie-content');

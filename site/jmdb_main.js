@@ -104,7 +104,7 @@ function showMovies(data) {
 
     const ratingPara = document.createElement('p');
     updateColor(ratingPara, vote_average);
-    ratingPara.innerText = `Rating: ${vote_average}`;
+    ratingPara.innerText = `Rating: ${Math.floor(vote_average)}`;
 
     const overviewPara = document.createElement('p');
     overviewPara.innerText = overview;
