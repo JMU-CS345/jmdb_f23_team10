@@ -36,6 +36,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .inner_header2 {
     align-items: right;
     justify-content: right;
@@ -54,7 +55,7 @@ body {
     display: flex;
 
     text-align: right;
-    justify-content:end;
+    justify-content: end;
 }
 
 .navigation a {
@@ -76,12 +77,28 @@ body {
     font-size: 21px;
 }
 
+.logout-container {
+    text-align: right;
+}
+
+#logoutLink {
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    font-family: 'Rammetto';
+    font-size: 20px;
+    color: #9966CC;
+    padding-right: 20px;
+    display: inline;
+}
+
 .container {
     width: 80%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
@@ -108,24 +125,35 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    margin-right: 5px;
+    margin: 0 5px;
 }
 
 #search-button:hover {
     background-color: #7f3da5;
 }
 
+.page-title {
+    color: #a45ee5;
+    text-align: center;
+    font-size: 24px;
+    margin: 20px auto;
+}
+
 #movie-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .movie,
 .actor {
     flex: 1;
     min-width: calc(33.33% - 20px);
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
@@ -158,6 +186,12 @@ body {
     line-height: 1.5;
 }
 
+.release-date {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+}
+
 #switch-search-type {
     background-color: #a45ee5;
     color: #fff;
@@ -178,6 +212,7 @@ body {
     font-size: 50px;
     margin-bottom: 20px;
 }
+
 #switch-search-type:hover {
     background-color: #7f3da5;
 }

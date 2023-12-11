@@ -9,21 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
     <meta charset="utf-8" />
-    <style>
-        #logoutLink {
-            /* Reset button styles */
-            border: none;
-            padding: 0;
-            background: none;
-            cursor: pointer;
-            font-family: 'Rammetto';
-            font-size: 20px;
-            color: #9966CC;
-            padding-right: 20px;
-            display: inline;
-            /* Make it inline to match the <a> element */
-        }
-    </style>
 </head>
 
 <body>
@@ -41,8 +26,10 @@
         <div class="inner_header2">
             <ul class="navigation">
                 <li><a id='logInLink' href="login.html">Log In</a></li>
-                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
             </ul>
+            <div class="logout-container">
+                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+            </div>
         </div>
     </div>
     <div class="container-detail">

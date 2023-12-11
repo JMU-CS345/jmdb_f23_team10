@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error('Error fetching actor movies:', error);
             });
     }
-    
+
 
     function displayActorMovies(actorMovies) {
         actorMovies.forEach((movie) => {
@@ -88,7 +88,11 @@ document.addEventListener("DOMContentLoaded", function () {
             movieDiv.classList.add('movie');
 
             const img = document.createElement('img');
-            img.src = IMG_URL + poster_path;
+            if (poster_path !== null) {
+                img.src = IMG_URL + poster_path;
+            } else {
+                img.src = 'default-poster.png';
+            }
             img.alt = title;
 
             movieDiv.addEventListener('click', () => {

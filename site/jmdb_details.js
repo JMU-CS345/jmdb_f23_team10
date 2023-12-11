@@ -41,13 +41,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayMovieDetails(movie) {
-    const { title, poster_path, vote_average, overview } = movie;
+    const { title, poster_path, vote_average, overview, release_date } = movie;
 
     const movieDiv = document.createElement('div');
     movieDiv.classList.add('movie');
 
     const img = document.createElement('img');
-    img.src = IMG_URL + poster_path;
+    if (poster_path !== null) {
+      img.src = IMG_URL + poster_path;
+    } else {
+      img.src = 'default-poster.png';
+    }
     img.alt = title;
 
     const movieInfo = document.createElement('div');
@@ -55,6 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const titleHeading = document.createElement('h3');
     titleHeading.innerText = title;
+
+    const movieDate = document.createElement('div');
+    movieDate.classList.add('movie-date');
+
+    const releaseDatePara = document.createElement('p');
+    releaseDatePara.innerText = `Release Date: ${formatReleaseDate(release_date)}`;
+    releaseDatePara.classList.add('release-date');
 
     const ratingPara = document.createElement('p');
     updateColor(ratingPara, vote_average);
@@ -70,13 +81,21 @@ document.addEventListener("DOMContentLoaded", function () {
     movieContent.appendChild(img);
     movieContent.appendChild(overviewPara);
 
-    overviewPara.innerText = overview;
-
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
+
+    movieDate.appendChild(releaseDatePara);
+
     movieDiv.appendChild(movieInfo);
+    movieDiv.appendChild(movieDate);
     movieDiv.appendChild(movieContent);
     movieContainer2.appendChild(movieDiv);
+  }
+
+  function formatReleaseDate(rawDate) {
+    const options = { month: 'short', day: 'numeric', year: 'numeric' };
+    const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
+    return formattedDate;
   }
 
   function fetchCastDetails(movieId) {
@@ -100,7 +119,11 @@ document.addEventListener("DOMContentLoaded", function () {
       actorDiv.dataset.actorId = id; // Set the actor_id in the dataset
 
       const actorImg = document.createElement('img');
-      actorImg.src = IMG_URL + profile_path;
+      if (profile_path !== null) {
+        actorImg.src = IMG_URL + profile_path;
+      } else {
+        actorImg.src = 'default-profile.jpg';
+      }
       actorImg.alt = name;
 
       const actorName = document.createElement('p');

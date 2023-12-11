@@ -74,21 +74,36 @@ function performSearch() {
           console.error('An error occurred:', error);
         });
     }
-  } else{
+  } else {
     alert('Must enter something to be searched.');
     getMovies(API_URL_MOVIE);
   }
 }
 
 function showMovies(data) {
-  data.forEach((movie) => {
-    const { title, poster_path, vote_average, overview, id } = movie;
+  // Sort movies by rating in descending order
+  const sortedMovies = data.sort((a, b) => {
+    // Sort by rating in descending order
+    if (b.vote_average !== a.vote_average) {
+      return b.vote_average - a.vote_average;
+    }
+
+    // If ratings are equal, sort by the presence of poster path (null values come last)
+    return a.poster_path === null ? 1 : -1;
+  });
+
+  sortedMovies.forEach((movie) => {
+    const { title, poster_path, vote_average, overview, id, release_date } = movie;
 
     const movieDiv = document.createElement('div');
     movieDiv.classList.add('movie');
 
     const img = document.createElement('img');
-    img.src = IMG_URL + poster_path;
+    if (poster_path !== null) {
+      img.src = IMG_URL + poster_path;
+    } else {
+      img.src = 'default-poster.png';
+    }
     img.alt = title;
 
     // Create a link for each movie to navigate to the movie detail page
@@ -111,6 +126,7 @@ function showMovies(data) {
 
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
+
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
     if (movieContainer != undefined) {
@@ -119,12 +135,24 @@ function showMovies(data) {
   });
 }
 
+function formatReleaseDate(rawDate) {
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+  const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
+  return formattedDate;
+}
+
 if (switchSearchTypeButton != null) {
   switchSearchTypeButton.addEventListener('click', switchSearchType);
 }
 
 // Add a variable to keep track of the current search type
 let isSearchingForMovies = true;
+
+// Update the page title based on the current search type
+function updatePageTitle() {
+  const pageTitle = document.querySelector('.page-title');
+  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
+}
 
 // Update the search bar placeholder based on the current search type
 function updateSearchBarPlaceholder() {
@@ -138,6 +166,9 @@ function switchSearchType() {
 
   // Update the button text based on the current search type
   switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
+
+  // Update the page title
+  updatePageTitle();
 
   // Update the search bar placeholder
   updateSearchBarPlaceholder();
@@ -164,16 +195,31 @@ if (switchSearchTypeButton != null) {
 // Function to show actor search results
 function showActors(data) {
   // Filter out actors with popularity less than 1
-  const filteredActors = data.filter(actor => actor.popularity >= 1);
+  //const filteredActors = data.filter(actor => actor.popularity >= 1);
 
-  filteredActors.forEach((actor) => {
+  // Sort actors by rating in descending order
+  const sortedActors = data.sort((a, b) => {
+    // Sort by rating in descending order
+    if (b.popularity !== a.popularity) {
+      return b.popularity - a.popularity;
+    }
+
+    // If ratings are equal, sort by the presence of poster path (null values come last)
+    return a.profile_path === null ? 1 : -1;
+  });
+
+  sortedActors.forEach((actor) => {
     const { name, profile_path, id } = actor;
 
     const actorDiv = document.createElement('div');
     actorDiv.classList.add('actor');
 
     const img = document.createElement('img');
-    img.src = IMG_URL + profile_path;
+    if (profile_path !== null) {
+      img.src = IMG_URL + profile_path;
+    } else {
+      img.src = 'default-profile.jpg';
+    }
     img.alt = name;
 
     // Create a link for each actor to navigate to the actor detail page
