@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nameHeading.innerText = name;
 
         const popularityPara = document.createElement('p');
-        popularityPara.innerText = `Popularity: ${popularity}`;
+        popularityPara.innerText = `Popularity: ${Math.floor(popularity)}`;
 
         const actorContent = document.createElement('div');
         actorContent.classList.add('actor-content');
