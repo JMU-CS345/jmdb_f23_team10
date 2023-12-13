@@ -1,5 +1,6 @@
 const actorContainer = document.getElementById('actor-container');
 const actorMoviesContainer = document.getElementById('actor-movies-container');
+const orderSelect = document.getElementById('order-select');
 
 document.addEventListener("DOMContentLoaded", function () {
     // Get actor ID from URL parameter
@@ -107,13 +108,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function fetchActorMovies(actorId) {
+    function fetchActorMovies(actorId, order = 'popularity') {
         // Make an API request to get movies that the actor has been in
         fetch(`${BASE_URL}person/${actorId}/movie_credits?${API_KEY}`)
             .then((response) => response.json())
             .then((movies) => {
-                // Sort movies by popularity (descending order)
-                const sortedMovies = movies.cast.sort((a, b) => b.popularity - a.popularity);
+                // Sort movies based on the selected order
+                const sortedMovies = (order === 'popularity')
+                    ? movies.cast.sort((a, b) => b.popularity - a.popularity)
+                    : movies.cast.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+
                 displayActorMovies(sortedMovies);
             })
             .catch((error) => {
@@ -123,6 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function displayActorMovies(actorMovies) {
+        // Clear existing content before appending new movies
+        actorMoviesContainer.innerHTML = '';
+
         actorMovies.forEach((movie) => {
             const { id, title, poster_path, release_date } = movie;
 
@@ -167,6 +174,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
         return formattedDate;
     }
+
+    const orderSelect = document.getElementById('order-select');
+    orderSelect.addEventListener('change', function () {
+        // Fetch and display actor movies based on the selected order
+        const selectedOrder = orderSelect.value;
+        fetchActorMovies(actorId, selectedOrder);
+    });
 });
 
 function actorUpdateColor(elt, vote_average) {
