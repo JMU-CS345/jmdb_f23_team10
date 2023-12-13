@@ -253,6 +253,19 @@ body {
     font-weight: bolder;
 }
 
+.trailer-section {
+    margin-top: 20px;
+}
+
+.trailers-list {
+    display: flex;
+    overflow-x: auto;
+}
+
+.trailer-item {
+    margin-right: 10px;
+}
+
 #favorite-button-container button {
     background-color: #a45ee5;
     color: #fff;

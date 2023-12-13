@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fetchMovieDetails(movieId) {
     // Make an API request to get movie details using the movieId
-    fetch(`${BASE_URL}movie/${movieId}?${API_KEY}`)
+    fetch(`${BASE_URL}movie/${movieId}?${API_KEY}&append_to_response=videos`)
       .then((response) => response.json())
       .then((movie) => {
         displayMovieDetails(movie);
@@ -89,6 +89,41 @@ document.addEventListener("DOMContentLoaded", function () {
     movieDiv.appendChild(movieDate);
     movieDiv.appendChild(movieContent);
     movieContainer2.appendChild(movieDiv);
+
+    // Check if trailers are available
+    if (movie.videos && movie.videos.results && movie.videos.results.length > 0) {
+      const trailerSection = document.createElement('div');
+      trailerSection.classList.add('trailer-section');
+
+      const trailersHeading = document.createElement('h3');
+      trailersHeading.innerText = 'Trailers';
+
+      const trailersList = document.createElement('div');
+      trailersList.classList.add('trailers-list');
+
+      // Reverse the array of trailers
+      const reversedTrailers = movie.videos.results.slice().reverse();
+
+      reversedTrailers.forEach((trailer) => {
+        const trailerItem = document.createElement('div');
+        trailerItem.classList.add('trailer-item');
+
+        const iframe = document.createElement('iframe');
+        iframe.width = '560';
+        iframe.height = '315';
+        iframe.src = `https://www.youtube.com/embed/${trailer.key}`;
+        iframe.frameborder = '0';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowfullscreen = true;
+
+        trailerItem.appendChild(iframe);
+        trailersList.appendChild(trailerItem);
+      });
+
+      trailerSection.appendChild(trailersHeading);
+      trailerSection.appendChild(trailersList);
+      movieContainer2.appendChild(trailerSection);
+    }
   }
 
   function formatReleaseDate(rawDate) {
