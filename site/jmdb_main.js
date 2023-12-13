@@ -153,7 +153,7 @@ function showMovies(data) {
     : data.sort((a, b) => (b.vote_average !== a.vote_average) ? (b.vote_average - a.vote_average) : (a.poster_path === null ? 1 : -1));*/
 
   // Sort movies by rating in descending order
-  const sortedMovies = data.sort((a, b) => {
+  /*const sortedMovies = data.sort((a, b) => {
     // Sort by rating in descending order
     if (b.vote_average !== a.vote_average) {
       return b.vote_average - a.vote_average;
@@ -161,9 +161,9 @@ function showMovies(data) {
 
     // If ratings are equal, sort by the presence of poster path (null values come last)
     return a.poster_path === null ? 1 : -1;
-  });
+  });*/
 
-  sortedMovies.forEach((movie) => {
+  data.forEach((movie) => {
     const { title, poster_path, vote_average, overview, id } = movie;
 
     const movieDiv = document.createElement('div');
