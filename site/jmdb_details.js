@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function displayMovieDetails(movie) {
-    const { title, poster_path, vote_average, overview, release_date } = movie;
+    const { title, poster_path, vote_average, overview, release_date, original_language } = movie;
 
     const movieDiv = document.createElement('div');
     movieDiv.classList.add('movie');
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     movieContent.classList.add('movie-content');
 
     const overviewPara = document.createElement('p');
-    overviewPara.innerText = overview;
+    overviewPara.innerText = `${overview} (Language: ${getLanguageName(original_language)})`;
     overviewPara.classList.add('movie-overview');
 
     movieContent.appendChild(img);
