@@ -38,8 +38,9 @@ body {
 }
 
 .inner_header2 {
-    align-items: right;
-    justify-content: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .logo_container h1 {
@@ -50,16 +51,12 @@ body {
 }
 
 .navigation {
-    flex: 1;
-    height: 100%;
     display: flex;
-
     text-align: right;
-    justify-content: end;
 }
 
 .navigation a {
-    height: 100%;
+    display: flex;
     align-items: center;
     padding: 0px 20px;
 }
@@ -69,19 +66,45 @@ body {
 }
 
 .navigation li a {
-    display: table-cell;
-    vertical-align: center;
-    height: 100%;
+    display: flex;
+    align-items: center;
     color: #a45ee5;
     font-family: "Rammetto";
     font-size: 21px;
 }
 
-.logout-container {
-    text-align: right;
+/*.logout-container {
+    display: flex;
+    align-items: center;
 }
 
 #logoutLink {
+    border: none;
+    padding: 10px;
+    background: none;
+    cursor: pointer;
+    font-family: 'Rammetto';
+    font-size: 20px;
+    color: #9966CC;
+    transition: color 0.3s;
+    text-align: center;
+}
+
+#logoutLink:hover {
+    color: #7f3da5;
+}*/
+
+#logInLink {
+    display: flex;
+    align-items: center;
+    padding: 0px 20px;
+    color: #a45ee5;
+    font-family: "Rammetto";
+    font-size: 21px;
+    text-align: right;
+}
+
+#profile-dropdown {
     border: none;
     padding: 0;
     background: none;
@@ -89,8 +112,63 @@ body {
     font-family: 'Rammetto';
     font-size: 20px;
     color: #9966CC;
-    padding-right: 20px;
-    display: inline;
+    margin-left: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: #a45ee5;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content button {
+    padding: 12px 16px;
+    display: block;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover #profile-dropdown {
+    color: #7f3da5;
+}
+
+.dropdown-content button:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.common-dropdown-button {
+    width: 100%;
 }
 
 .container {

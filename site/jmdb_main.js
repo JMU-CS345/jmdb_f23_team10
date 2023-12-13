@@ -11,10 +11,10 @@ const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const movieContainer = document.getElementById('movie-container');
 
-const movieDetail = document.getElementById('movie-detail');
 getMovies(API_URL_MOVIE);
 
-const switchSearchTypeButton = document.getElementById('switch-search-type');
+const switchToMoviesButton = document.getElementById('switch-to-movies-button');
+const switchToActorsButton = document.getElementById('switch-to-actors-button');
 
 function getMovies(url) {
   fetch(url)
@@ -78,8 +78,10 @@ function performSearch() {
     alert('Must enter something to be searched.');
     if (isSearchingForMovies) {
       getMovies(API_URL_MOVIE);
-    } else {
+    } else if (isSearchingForActors) {
       getActors(API_URL_ACTOR);
+    } else {
+      getShows(API_URL_TV);
     }
   }
 }
@@ -106,7 +108,7 @@ function showMovies(data) {
   });
 
   sortedMovies.forEach((movie) => {
-    const { title, poster_path, vote_average, overview, id, release_date } = movie;
+    const { title, poster_path, vote_average, overview, id } = movie;
 
     const movieDiv = document.createElement('div');
     movieDiv.classList.add('movie');
@@ -146,63 +148,6 @@ function showMovies(data) {
       movieContainer.appendChild(movieDiv);
     }
   });
-}
-
-function formatReleaseDate(rawDate) {
-  const options = { month: 'short', day: 'numeric', year: 'numeric' };
-  const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
-  return formattedDate;
-}
-
-if (switchSearchTypeButton != null) {
-  switchSearchTypeButton.addEventListener('click', switchSearchType);
-}
-
-// Add a variable to keep track of the current search type
-let isSearchingForMovies = true;
-
-// Update the page title based on the current search type
-function updatePageTitle() {
-  const pageTitle = document.querySelector('.page-title');
-  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
-}
-
-// Update the search bar placeholder based on the current search type
-function updateSearchBarPlaceholder() {
-  const searchInput = document.getElementById('search-input');
-  searchInput.placeholder = isSearchingForMovies ? 'Search Movies' : 'Search Actors';
-}
-
-// Modify your switchSearchType function to update the search bar placeholder
-function switchSearchType() {
-  isSearchingForMovies = !isSearchingForMovies;
-
-  // Update the button text based on the current search type
-  switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
-
-  // Update the page title
-  updatePageTitle();
-
-  // Update the search bar placeholder
-  updateSearchBarPlaceholder();
-
-  updatePageTitle();
-
-  // Clear the previous search results
-  movieContainer.innerHTML = '';
-
-  // Perform a search based on the new search type
-  if (isSearchingForMovies) {
-    // Perform movie search
-    getMovies(API_URL_MOVIE);
-  } else {
-    getActors(API_URL_ACTOR);
-  }
-}
-
-if (switchSearchTypeButton != null) {
-  // Call updateSearchBarPlaceholder to set the initial placeholder
-  updateSearchBarPlaceholder();
 }
 
 // Function to show actor search results
@@ -262,6 +207,119 @@ function showActors(data) {
   });
 }
 
+/*
+// Add a variable to keep track of the current search type
+let isSearchingForMovies = true;
+
+if (switchSearchTypeButton != null) {
+  switchSearchTypeButton.addEventListener('click', switchSearchType);
+  // Call updateSearchBarPlaceholder to set the initial placeholder
+  updateSearchBarPlaceholder();
+}
+
+// Update the page title based on the current search type
+function updatePageTitle() {
+  const pageTitle = document.querySelector('.page-title');
+  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
+}
+
+// Update the search bar placeholder based on the current search type
+function updateSearchBarPlaceholder() {
+  const searchInput = document.getElementById('search-input');
+  searchInput.placeholder = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
+}
+
+// Modify your switchSearchType function to update the search bar placeholder
+function switchSearchType() {
+  isSearchingForMovies = !isSearchingForMovies;
+
+  // Update the button text based on the current search type
+  switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
+
+  // Update the page title
+  updatePageTitle();
+
+  // Update the search bar placeholder
+  updateSearchBarPlaceholder();
+
+  // Clear the previous search results
+  movieContainer.innerHTML = '';
+
+  // Perform a search based on the new search type
+  if (isSearchingForMovies) {
+    // Perform movie search
+    getMovies(API_URL_MOVIE);
+  } else {
+    getActors(API_URL_ACTOR);
+  }
+}
+*/
+// Add a variable to keep track of the current search type
+let isSearchingForMovies = true;
+let isSearchingForActors = false;
+
+if (switchToMoviesButton) {
+  switchToMoviesButton.addEventListener('click', switchToMovies);
+}
+
+if (switchToActorsButton) {
+  switchToActorsButton.addEventListener('click', switchToActors);
+}
+
+function updatePageTitle() {
+  const pageTitle = document.querySelector('#trend');
+  if (isSearchingForMovies) {
+    pageTitle.textContent = 'Trending Movies';
+  } else if (isSearchingForActors) {
+    pageTitle.textContent = 'Trending Actors';
+  }
+}
+
+function updateSearchBarPlaceholder() {
+  const searchInput = document.getElementById('search-input');
+  if (isSearchingForMovies) {
+    searchInput.placeholder = 'Search Movies';
+  } else if (isSearchingForActors) {
+    searchInput.placeholder = 'Search Actors';
+  }
+}
+
+// Modify the switchToMovies function to handle switching to Movies
+function switchToMovies() {
+  isSearchingForMovies = true;
+  isSearchingForActors = false;
+
+  // Update the page title
+  updatePageTitle();
+
+  // Update the search bar placeholder
+  updateSearchBarPlaceholder();
+
+  // Clear the previous search results
+  movieContainer.innerHTML = '';
+
+  // Perform a search for Movies
+  getMovies(API_URL_MOVIE);
+}
+
+// Modify the switchToActors function to handle switching to Actors
+function switchToActors() {
+  isSearchingForMovies = false;
+  isSearchingForActors = true;
+
+  // Update the page title
+  updatePageTitle();
+
+  // Update the search bar placeholder for Actors
+  updateSearchBarPlaceholder();
+
+  // Clear the previous search results
+  movieContainer.innerHTML = '';
+
+  // Perform a search for Actors
+  getActors(API_URL_ACTOR);
+}
+
 function updateColor(elt, vote_average) {
   if (vote_average > 7) {
     elt.style['color'] = 'green';
@@ -306,7 +364,7 @@ function signUpUser(username, password) {
     .then(response => {
       if (response.status === 404) {
         // User doesn't exist, proceed with sign-up
-        const JSONInfo = { key1: username, key2: password, key3: [] };
+        const JSONInfo = { key1: username, key2: password, key3: [], key4: [] };
         main.set(username, JSON.stringify(JSONInfo), function (res) {
           alert('Sign up Successful. Please Log In.');
           localStorage.setItem('currentUser', username);
@@ -324,9 +382,4 @@ function signUpUser(username, password) {
 
 function getCurrentUser() {
   return currentUser;
-}
-
-function updatePageTitle() {
-  const pageTitle = document.querySelector('#trend');
-  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
 }

@@ -15,7 +15,7 @@
     <div class="header">
         <a href="header.html">
             <div class="picture">
-                <img src="logo.png" alt="testing" id="logo" width="100" height="100">
+                <img src="logo.png" alt="Logo" id="logo" width="100" height="100">
             </div>
         </a>
         <div class="inner_header">
@@ -24,17 +24,19 @@
             </div>
         </div>
         <div class="inner_header2">
-            <ul class="navigation">
-                <li><a id='logInLink' href="login.html">Log In</a></li>
-            </ul>
-            <div class="logout-container">
-                <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+            <div class="dropdown">
+                <button id="profile-dropdown" class="common-dropdown-button">Profile</button>
+                <div class="dropdown-content">
+                    <a id='profileLink' href="profile_page.html">Profile Page</a>
+                    <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+                </div>
             </div>
+            <a id='logInLink' href="login.html" style="display: none;">Log In</a>
         </div>
     </div>
     <div class="container-detail">
         <div id="movie-container2">
-            <!-- Movie results will be displayed here after a search -->
+            <!-- Movie informstion will be displayed here -->
         </div>
         <div id="cast-container">
             <!-- Cast information will be displayed here -->
@@ -54,8 +56,39 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let loginStatus = document.getElementById('logInLink');
+            let profileLink = document.getElementById('profileLink');
+            let logoutButton = document.getElementById('logoutLink');
+            let profileDropdown = document.getElementById('profile-dropdown');
 
-    </div>
+            if (localStorage.getItem('currentUser') != null) {
+                // User is logged in, show the "Profile Page" and "Log Out" buttons in the dropdown
+                loginStatus.style.display = 'none'; // Hide the "Log In" button
+                profileLink.href = 'profile_page.html';
+                profileDropdown.textContent = localStorage.getItem('currentUser');
+                profileDropdown.style.display = 'inline-block';
+                logoutButton.style.display = 'inline-block';
+            } else {
+                // User is not logged in, show the "Log In" button
+                loginStatus.style.display = 'inline-block';
+                profileDropdown.style.display = 'none'; // Hide the dropdown
+                logoutButton.style.display = 'none';
+            }
+        });
+
+        function signOutBtn() {
+            let loginStatus = document.getElementById('logInLink');
+
+            if (localStorage.getItem('currentUser') != null) {
+                localStorage.clear();
+                loginStatus.textContent = 'Log In';
+                loginStatus.href = 'login.html';
+                window.location.href = 'header.html';
+            }
+        }
+    </script>
     <script src="jmdb_main.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -128,33 +161,5 @@
     </script>
 </body>
 <script src="jmdb_details.js"></script>
-<script>
-    function signOutBtn() {
-        let loginStatus = document.getElementById('logInLink');
-
-        if (localStorage.getItem('currentUser') != null) {
-            localStorage.clear();
-            loginStatus.textContent = 'Log In';
-            loginStatus.href = 'login.html';
-            window.location.href = 'header.html';
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        let loginStatus = document.getElementById('logInLink');
-        let logoutButton = document.getElementById('logoutLink');
-
-
-        if (localStorage.getItem('currentUser') != null) {
-            loginStatus.textContent = 'Profile Page';
-            loginStatus.href = 'profile_page.html';
-            // User is logged in, show the "Log Out" button
-            logoutButton.style.display = 'inline-block';
-        } else {
-            // User is not logged in, hide the "Log Out" button
-            logoutButton.style.display = 'none';
-        }
-    });
-</script>
 
 </html>

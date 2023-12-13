@@ -2,7 +2,6 @@ const movieContainer2 = document.getElementById('movie-container2');
 const castContainer = document.getElementById("cast-container");
 
 document.addEventListener("DOMContentLoaded", function () {
-  const movieDetailButton = document.getElementById("movie-detail");
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get("movie_id");
   fetch(main.url_for(movieId))
@@ -237,14 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function createActorLink(actorId) {
-    const actorLink = document.createElement('a');
-    actorLink.href = `actor_details.html?actor_id=${actorId}`;
-    return actorLink;
-  }
-
   // Add event listener to actor containers within the cast container
-  const castContainer = document.getElementById('cast-container');
   castContainer.addEventListener('click', function (event) {
     const actorContainer = event.target.closest('.actor');
     if (actorContainer) {

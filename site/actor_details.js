@@ -46,10 +46,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const birthdayPara = document.createElement('p');
         birthdayPara.innerText = `Birthday: ${formatBirthDate(birthday)}`;
+        if (deathday == null) {
+            birthdayPara.innerText += ` (Age: ${calculateAge(birthday)})`;
+        }
         birthdayPara.classList.add('birth-date');
 
         const deathdayPara = document.createElement('p');
-        deathdayPara.innerText = `Deathday: ${formatBirthDate(deathday)}`;
+        deathdayPara.innerText = `Death Date: ${formatBirthDate(deathday)}`;
+        if (deathday !== null) {
+            deathdayPara.innerText += ` (Age: ${calculateAge(birthday, deathday)})`;
+        }
         deathdayPara.classList.add('death-date');
 
         const popularityPara = document.createElement('p');
@@ -89,6 +95,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return formattedDate;
     }
 
+    function calculateAge(birthDate, deathDate = new Date()) {
+        const birth = new Date(birthDate);
+        const death = new Date(deathDate);
+        const age = death.getFullYear() - birth.getFullYear();
+        const monthDiff = death.getMonth() - birth.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && death.getDate() < birth.getDate())) {
+            return age - 1;
+        } else {
+            return age;
+        }
+    }
+
     function fetchActorMovies(actorId) {
         // Make an API request to get movies that the actor has been in
         fetch(`${BASE_URL}person/${actorId}/movie_credits?${API_KEY}`)
@@ -106,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayActorMovies(actorMovies) {
         actorMovies.forEach((movie) => {
-            const { id, title, poster_path } = movie;
+            const { id, title, poster_path, release_date } = movie;
 
             const movieDiv = document.createElement('div');
             movieDiv.classList.add('movie');
@@ -130,12 +148,24 @@ document.addEventListener("DOMContentLoaded", function () {
             const titleHeading = document.createElement('h3');
             titleHeading.innerText = title;
 
+            const releaseDatePara = document.createElement('p');
+            if (release_date != '') {
+                releaseDatePara.innerText = formatReleaseDate(release_date);
+            }
+
             movieInfo.appendChild(titleHeading);
+            movieInfo.appendChild(releaseDatePara);
             movieDiv.appendChild(img);
             movieDiv.appendChild(movieInfo);
 
             actorMoviesContainer.appendChild(movieDiv);
         });
+    }
+
+    function formatReleaseDate(rawDate) {
+        const options = { month: 'short', day: 'numeric', year: 'numeric' };
+        const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
+        return formattedDate;
     }
 });
 
