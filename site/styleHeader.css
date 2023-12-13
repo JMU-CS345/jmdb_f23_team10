@@ -31,7 +31,6 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,27 +71,6 @@ body {
     font-family: "Rammetto";
     font-size: 21px;
 }
-
-/*.logout-container {
-    display: flex;
-    align-items: center;
-}
-
-#logoutLink {
-    border: none;
-    padding: 10px;
-    background: none;
-    cursor: pointer;
-    font-family: 'Rammetto';
-    font-size: 20px;
-    color: #9966CC;
-    transition: color 0.3s;
-    text-align: center;
-}
-
-#logoutLink:hover {
-    color: #7f3da5;
-}*/
 
 #logInLink {
     display: flex;
@@ -249,6 +227,29 @@ body {
 #switch-to-movies-button:hover {
     background-color: #7f3da5;
 }
+
+.trend-buttons {
+    display: flex;
+    justify-content: space-around;
+    /* Center the buttons with equal space between them */
+    margin-top: 20px;
+}
+
+.trend-buttons button {
+    padding: 10px 20px;
+    background-color: #a45ee5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.trend-buttons button:hover {
+    background-color: #7f3da5;
+}
+
 
 .page-title {
     color: #a45ee5;

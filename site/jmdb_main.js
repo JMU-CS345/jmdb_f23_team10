@@ -16,10 +16,59 @@ getMovies(API_URL_MOVIE);
 const switchToMoviesButton = document.getElementById('switch-to-movies-button');
 const switchToActorsButton = document.getElementById('switch-to-actors-button');
 
+const topRatedButton = document.getElementById('top-rated-button');
+const nowPlayingButton = document.getElementById('now-playing-button');
+const upcomingButton = document.getElementById('upcoming-button');
+
+const discoverButton = document.getElementById('discover-button');
+const discoverDropdown = document.getElementById('discover-dropdown');
+const popularityDropdown = document.getElementById('popularity-dropdown');
+
+if (topRatedButton) {
+  topRatedButton.addEventListener('click', () => {
+    const topRatedURL = `${BASE_URL}movie/top_rated?${API_KEY}`;
+    getMovies(topRatedURL);
+    updatePageTitle('Top Rated Movies');
+  });
+}
+
+if (nowPlayingButton) {
+  nowPlayingButton.addEventListener('click', () => {
+    const nowPlayingURL = `${BASE_URL}movie/now_playing?${API_KEY}`;
+    getMovies(nowPlayingURL, isNowPlaying = true); // Pass an additional argument to indicate most recent
+    updatePageTitle('Most Recent Movies');
+  });
+}
+
+if (upcomingButton) {
+  upcomingButton.addEventListener('click', () => {
+    const upcomingURL = `${BASE_URL}movie/upcoming?${API_KEY}`;
+    getMovies(upcomingURL);
+    updatePageTitle('Upcoming Movies');
+  });
+}
+
+if (discoverButton) {
+  discoverButton.addEventListener('click', () => {
+    discoverDropdown.style.display = discoverDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  discoverDropdown.addEventListener('click', (event) => {
+    if (event.target.tagName === 'BUTTON') {
+      const sortBy = event.target.getAttribute('data-sort-by');
+      const discoverURL = `${BASE_URL}discover/movie?${API_KEY}&sort_by=${sortBy}`;
+      getMovies(discoverURL);
+      updatePageTitle(`Discover Movies - ${event.target.textContent}`);
+      discoverDropdown.style.display = 'none';
+    }
+  });
+}
+
 function getMovies(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
+      movieContainer.innerHTML = '';
       showMovies(data.results);
     });
 }
@@ -87,6 +136,8 @@ function performSearch() {
 }
 
 function showMovies(data) {
+  // Clear the movie container before showing new movies
+  movieContainer.innerHTML = '';
   if (data.length === 0) {
     // If no movies found, display a message
     const noResultsMessage = document.createElement('p');
@@ -95,6 +146,11 @@ function showMovies(data) {
     movieContainer.appendChild(noResultsMessage);
     return;
   }
+
+  // Sort movies based on release date for "Most Recent" button
+  /*const sortedMovies = isNowPlaying
+    ? data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+    : data.sort((a, b) => (b.vote_average !== a.vote_average) ? (b.vote_average - a.vote_average) : (a.poster_path === null ? 1 : -1));*/
 
   // Sort movies by rating in descending order
   const sortedMovies = data.sort((a, b) => {
@@ -207,53 +263,6 @@ function showActors(data) {
   });
 }
 
-/*
-// Add a variable to keep track of the current search type
-let isSearchingForMovies = true;
-
-if (switchSearchTypeButton != null) {
-  switchSearchTypeButton.addEventListener('click', switchSearchType);
-  // Call updateSearchBarPlaceholder to set the initial placeholder
-  updateSearchBarPlaceholder();
-}
-
-// Update the page title based on the current search type
-function updatePageTitle() {
-  const pageTitle = document.querySelector('.page-title');
-  pageTitle.textContent = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
-}
-
-// Update the search bar placeholder based on the current search type
-function updateSearchBarPlaceholder() {
-  const searchInput = document.getElementById('search-input');
-  searchInput.placeholder = isSearchingForMovies ? 'Trending Movies' : 'Trending Actors';
-}
-
-// Modify your switchSearchType function to update the search bar placeholder
-function switchSearchType() {
-  isSearchingForMovies = !isSearchingForMovies;
-
-  // Update the button text based on the current search type
-  switchSearchTypeButton.textContent = isSearchingForMovies ? 'Switch to Actor Search' : 'Switch to Movie Search';
-
-  // Update the page title
-  updatePageTitle();
-
-  // Update the search bar placeholder
-  updateSearchBarPlaceholder();
-
-  // Clear the previous search results
-  movieContainer.innerHTML = '';
-
-  // Perform a search based on the new search type
-  if (isSearchingForMovies) {
-    // Perform movie search
-    getMovies(API_URL_MOVIE);
-  } else {
-    getActors(API_URL_ACTOR);
-  }
-}
-*/
 // Add a variable to keep track of the current search type
 let isSearchingForMovies = true;
 let isSearchingForActors = false;
@@ -266,13 +275,9 @@ if (switchToActorsButton) {
   switchToActorsButton.addEventListener('click', switchToActors);
 }
 
-function updatePageTitle() {
+function updatePageTitle(title) {
   const pageTitle = document.querySelector('#trend');
-  if (isSearchingForMovies) {
-    pageTitle.textContent = 'Trending Movies';
-  } else if (isSearchingForActors) {
-    pageTitle.textContent = 'Trending Actors';
-  }
+  pageTitle.textContent = title;
 }
 
 function updateSearchBarPlaceholder() {
@@ -290,10 +295,13 @@ function switchToMovies() {
   isSearchingForActors = false;
 
   // Update the page title
-  updatePageTitle();
+  updatePageTitle('Trending Movies');
 
   // Update the search bar placeholder
   updateSearchBarPlaceholder();
+
+  // Toggle visibility of trend buttons
+  toggleTrendButtons(true);
 
   // Clear the previous search results
   movieContainer.innerHTML = '';
@@ -308,16 +316,27 @@ function switchToActors() {
   isSearchingForActors = true;
 
   // Update the page title
-  updatePageTitle();
+  updatePageTitle('Trending Actors');
 
   // Update the search bar placeholder for Actors
   updateSearchBarPlaceholder();
+
+  // Toggle visibility of trend buttons
+  toggleTrendButtons(false);
 
   // Clear the previous search results
   movieContainer.innerHTML = '';
 
   // Perform a search for Actors
   getActors(API_URL_ACTOR);
+}
+
+// Function to toggle the visibility of trend buttons
+function toggleTrendButtons(show) {
+  const trendButtons = document.getElementById('trend-buttons');
+  if (trendButtons) {
+    trendButtons.style.display = show ? 'flex' : 'none';
+  }
 }
 
 function updateColor(elt, vote_average) {
