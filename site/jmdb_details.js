@@ -146,13 +146,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function displayCastDetails(cast) {
     cast.forEach((actor) => {
-      const { id, name, profile_path } = actor;
+      const { id, name, profile_path, character } = actor;
 
       const actorDiv = document.createElement("div");
       actorDiv.classList.add('actor');
-      actorDiv.dataset.actorId = id; // Set the actor_id in the dataset
+      actorDiv.dataset.actorId = id;
 
       const actorImg = document.createElement('img');
+      actorImg.classList.add('actor-image');
       if (profile_path !== null) {
         actorImg.src = IMG_URL + profile_path;
       } else {
@@ -160,16 +161,26 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       actorImg.alt = name;
 
-      const actorName = document.createElement('p');
+      const actorInfoDiv = document.createElement('div');
+      actorInfoDiv.classList.add('actor-info');
+
+      const actorName = document.createElement('h3');
+      actorName.classList.add('actor-name');
       actorName.innerText = name;
 
+      const characterName = document.createElement('p');
+      characterName.classList.add('character-name');
+      characterName.innerText = `as ${character}`;
+
+      actorInfoDiv.appendChild(actorName);
+      actorInfoDiv.appendChild(characterName);
+
       actorDiv.appendChild(actorImg);
-      actorDiv.appendChild(actorName);
+      actorDiv.appendChild(actorInfoDiv);
 
       castContainer.appendChild(actorDiv);
     });
   }
-
 
   async function displayFavoriteButton(movieId) {
     const favoriteButtonContainer = document.getElementById("favorite-button-container");
@@ -199,7 +210,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
   async function getFavorites() {
     const currentUser = localStorage.getItem('currentUser');
 
@@ -217,7 +227,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-
   async function fetchUserData(username) {
     const response = await fetch(main.url_for(username));
     if (!response.ok) {
@@ -225,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     return response.json();
   }
-
 
   async function toggleFavoriteStatus(movieId) {
     const favorites = await getFavorites();
@@ -243,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Movie added to favorites!");
     }
   }
-
 
   async function setFavorites(updatedFavorites) {
     const currentUser = localStorage.getItem('currentUser');

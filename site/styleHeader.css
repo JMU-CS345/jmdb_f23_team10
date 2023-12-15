@@ -93,11 +93,16 @@ body {
     margin-left: 20px;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #fff;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f2f2f2;
+    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
     z-index: 1;
     border-radius: 5px;
     overflow: hidden;
@@ -120,11 +125,33 @@ body {
 }
 
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color: #f2f2f2;
 }
 
 .dropdown:hover #profile-dropdown {
     color: #7f3da5;
+}
+
+.dropdown-content button {
+    padding: 12px 16px;
+    display: block;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+    background: none;
+    background-color: transparent;
+    font-size: 16px;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.common-dropdown-button {
+    width: 100%;
 }
 
 .container {
@@ -140,11 +167,6 @@ body {
 .search-bar {
     display: flex;
     margin-bottom: 20px;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
 }
 
 #search-input {
@@ -186,37 +208,16 @@ body {
     background-color: #7f3da5;
 }
 
-.dropdown-content button {
-    padding: 12px 16px;
-    display: block;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    border: none;
-    background: none;
-    font-size: 16px;
-    color: #333;
-    transition: background-color 0.3s;
-}
-
-.dropdown-content button:hover {
-    background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.common-dropdown-button {
-    width: 100%;
-}
-
 #switch-to-actors-button,
 #switch-to-movies-button {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 10px 20px;
+    /* Adjusted padding for consistency with the search type button */
     border: none;
+    background-color: #a45ee5;
+    /* Use the same background color as the search type button */
+    color: #fff;
+    /* Text color */
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
@@ -237,6 +238,7 @@ body {
 
 .trend-buttons button {
     padding: 10px 20px;
+    width: 100%;
     background-color: #a45ee5;
     color: #fff;
     border: none;
@@ -309,6 +311,33 @@ body {
     font-size: 16px;
     color: #555;
     margin-top: 5px;
+}
+
+.movie.expanded .overview {
+    display: block;
+}
+
+.movie .overview {
+    display: none;
+}
+
+.movie-info .toggle-button {
+    background-color: #a45ee5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 1s;
+}
+
+.movie-info .toggle-button:hover {
+    background-color: #7f3da5;
+}
+
+.movie.expanded .toggle-button {
+    transform: rotate(360deg);
 }
 
 #trend {

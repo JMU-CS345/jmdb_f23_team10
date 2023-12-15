@@ -27,9 +27,9 @@
         <div class="inner_header2">
             <div class="dropdown">
                 <button id="profile-dropdown" class="common-dropdown-button">Profile</button>
-                <div class="dropdown-content">
-                    <a id='profileLink' href="profile_page.html">Profile Page</a>
-                    <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+                <div class="dropdown-content" id="profile-content">
+                    <a id='profileLink' class="common-dropdown-button" href="profile_page.html">Profile Page</a>
+                    <button id='logoutLink' class="common-dropdown-button" onclick="signOutBtn()">Log Out</button>
                 </div>
             </div>
             <a id='logInLink' href="login.html" style="display: none;">Log In</a>
@@ -42,24 +42,24 @@
             <div class="dropdown">
                 <button id="search-dropdown" class="search-type-button common-dropdown-button">Search type</button>
                 <div class="dropdown-content">
-                    <button id="switch-to-actors-button" class="common-dropdown-button">Actors</button>
-                    <button id="switch-to-movies-button" class="common-dropdown-button">Movies</button>
+                    <button id="switch-to-actors-button" class="common-dropdown-button">Actor Search</button>
+                    <button id="switch-to-movies-button" class="common-dropdown-button">Movie Search</button>
                 </div>
             </div>
         </div>
         <div class="trend-buttons" id="trend-buttons">
-            <button id="top-rated-button" class="common-dropdown-button">Top Rated</button>
-            <button id="now-playing-button" class="common-dropdown-button">Now Playing</button>
-            <button id="upcoming-button" class="common-dropdown-button">Upcoming</button>
+            <button id="trending-button" class="trend-button">Trending</button>
+            <button id="top-rated-button" class="trend-button">Top Rated</button>
+            <button id="now-playing-button" class="trend-button">Now Playing</button>
+            <button id="upcoming-button" class="trend-button">Upcoming</button>
             <div class="dropdown">
-                <button id="discover-button" class="search-type-button">Discover</button>
+                <button id="discover-button" class="common-dropdown-button trend-button">Discover</button>
                 <div class="dropdown-content" id="discover-dropdown">
-                    <button data-sort-by="popularity.desc">Most Popular</button>
-                    <button data-sort-by="release_date.desc">Release Date (Descending)</button>
-                    <button data-sort-by="release_date.asc">Release Date (Ascending)</button>
+                    <!-- <button data-sort-by="release_date.desc">Release Date (Descending)</button> -->
+                    <!-- <button data-sort-by="release_date.asc">Release Date (Oldest to Newest)</button> -->
                     <button data-sort-by="revenue.desc">Most Revenue</button>
-                    <button data-sort-by="original_title.asc">Alphabetical Order (A to Z)</button>
-                    <button data-sort-by="original_title.desc">Alphabetical Order (Z to A)</button>
+                    <!-- <button data-sort-by="original_title.asc">Alphabetical Order (A to Z)</button> -->
+                    <!-- <button data-sort-by="original_title.desc">Alphabetical Order (Z to A)</button> -->
                 </div>
             </div>
         </div>
@@ -69,6 +69,7 @@
         <div id="movie-container">
             <!-- Movie results will be displayed here after a search -->
         </div>
+        <button id="load-more-button">Load More</button>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

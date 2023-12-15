@@ -16,16 +16,56 @@ getMovies(API_URL_MOVIE);
 const switchToMoviesButton = document.getElementById('switch-to-movies-button');
 const switchToActorsButton = document.getElementById('switch-to-actors-button');
 
+const trendingButton = document.getElementById('trending-button');
 const topRatedButton = document.getElementById('top-rated-button');
 const nowPlayingButton = document.getElementById('now-playing-button');
 const upcomingButton = document.getElementById('upcoming-button');
 
 const discoverButton = document.getElementById('discover-button');
 const discoverDropdown = document.getElementById('discover-dropdown');
-const popularityDropdown = document.getElementById('popularity-dropdown');
+
+let currentDiscoverSortBy = 'popularity.desc';
+
+// Identify the "Load More" button in your HTML, and add an event listener
+const loadMoreButton = document.getElementById('load-more-button');
+
+// Add a global variable to keep track of the current page
+let currentPage = 1;
+
+let isTrending = true;
+let isTopRated = false;
+let isNowPlaying = false;
+let isUpcoming = false;
+let isDiscover = false;
+
+if (trendingButton) {
+  trendingButton.addEventListener('click', () => {
+    isTrending = true;
+    isTopRated = false;
+    isNowPlaying = false;
+    isUpcoming = false;
+    isDiscover = false;
+
+    currentPage = 1;
+    loadMoreButton.textContent = `Load More (Page ${currentPage})`;
+
+    const trendingURL = `${BASE_URL}movie/popular?${API_KEY}`;
+    getMovies(trendingURL);
+    updatePageTitle('Top Rated Movies');
+  });
+}
 
 if (topRatedButton) {
   topRatedButton.addEventListener('click', () => {
+    isTrending = false;
+    isTopRated = true;
+    isNowPlaying = false;
+    isUpcoming = false;
+    isDiscover = false;
+
+    currentPage = 1;
+    loadMoreButton.textContent = `Load More (Page ${currentPage})`;
+
     const topRatedURL = `${BASE_URL}movie/top_rated?${API_KEY}`;
     getMovies(topRatedURL);
     updatePageTitle('Top Rated Movies');
@@ -34,6 +74,15 @@ if (topRatedButton) {
 
 if (nowPlayingButton) {
   nowPlayingButton.addEventListener('click', () => {
+    isTrending = false;
+    isTopRated = false
+    isNowPlaying = true;
+    isUpcoming = false;
+    isDiscover = false;
+
+    currentPage = 1;
+    loadMoreButton.textContent = `Load More (Page ${currentPage})`;
+
     const nowPlayingURL = `${BASE_URL}movie/now_playing?${API_KEY}`;
     getMovies(nowPlayingURL, isNowPlaying = true); // Pass an additional argument to indicate most recent
     updatePageTitle('Most Recent Movies');
@@ -42,6 +91,15 @@ if (nowPlayingButton) {
 
 if (upcomingButton) {
   upcomingButton.addEventListener('click', () => {
+    isTrending = false;
+    isTopRated = false;
+    isNowPlaying = false;
+    isUpcoming = true;
+    isDiscover = false;
+
+    currentPage = 1;
+    loadMoreButton.textContent = `Load More (Page ${currentPage})`;
+
     const upcomingURL = `${BASE_URL}movie/upcoming?${API_KEY}`;
     getMovies(upcomingURL);
     updatePageTitle('Upcoming Movies');
@@ -54,8 +112,18 @@ if (discoverButton) {
   });
 
   discoverDropdown.addEventListener('click', (event) => {
+    isTrending = false;
+    isTopRated = false;
+    isNowPlaying = false;
+    isUpcoming = false;
+    isDiscover = true;
+
+    currentPage = 1;
+    loadMoreButton.textContent = `Load More (Page ${currentPage})`;
+
     if (event.target.tagName === 'BUTTON') {
       const sortBy = event.target.getAttribute('data-sort-by');
+      currentDiscoverSortBy = sortBy;
       const discoverURL = `${BASE_URL}discover/movie?${API_KEY}&sort_by=${sortBy}`;
       getMovies(discoverURL);
       updatePageTitle(`Discover Movies - ${event.target.textContent}`);
@@ -164,7 +232,7 @@ function showMovies(data) {
   });*/
 
   data.forEach((movie) => {
-    const { title, poster_path, vote_average, overview, id } = movie;
+    const { title, poster_path, vote_average, overview, id, release_date } = movie;
 
     const movieDiv = document.createElement('div');
     movieDiv.classList.add('movie');
@@ -192,18 +260,48 @@ function showMovies(data) {
     updateColor(ratingPara, vote_average);
     ratingPara.innerText = `Rating: ${Math.floor(vote_average)}`;
 
+    const releaseDatePara = document.createElement('p');
+    releaseDatePara.classList.add('release-date');
+    releaseDatePara.innerText = `Release Date: ${formatReleaseDate(release_date)}`;
+
     const overviewPara = document.createElement('p');
+    overviewPara.classList.add('overview');
     overviewPara.innerText = overview;
+
+    // Button to toggle additional details
+    const toggleButton = document.createElement('button');
+    toggleButton.classList.add('toggle-button');
+    toggleButton.innerText = 'Show More';
+    toggleButton.addEventListener('click', () => {
+      // Toggle the class to show/hide the additional details
+      const isExpanded = movieDiv.classList.toggle('expanded');
+
+      // Update the button text based on the state
+      toggleButton.innerText = isExpanded ? 'Show Less' : 'Show More';
+
+      // Conditionally show/hide the overview and release date based on the button state
+      overviewPara.style.display = isExpanded ? 'block' : 'none';
+    });
 
     movieInfo.appendChild(titleHeading);
     movieInfo.appendChild(ratingPara);
+    movieInfo.appendChild(releaseDatePara);
+    movieInfo.appendChild(overviewPara);
+    movieInfo.appendChild(toggleButton);
 
     movieDiv.appendChild(movieLink);
     movieDiv.appendChild(movieInfo);
+
     if (movieContainer != undefined) {
       movieContainer.appendChild(movieDiv);
     }
   });
+}
+
+function formatReleaseDate(rawDate) {
+  const options = { month: 'short', day: 'numeric', year: 'numeric' };
+  const formattedDate = new Date(rawDate).toLocaleDateString('en-US', options);
+  return formattedDate;
 }
 
 // Function to show actor search results
@@ -337,6 +435,48 @@ function toggleTrendButtons(show) {
   if (trendButtons) {
     trendButtons.style.display = show ? 'flex' : 'none';
   }
+}
+
+if (loadMoreButton) {
+  loadMoreButton.addEventListener('click', loadMore);
+}
+
+// Function to load more movies
+function loadMore() {
+  currentPage++;
+
+  // Determine the current URL based on the sorting method
+  let currentURL;
+  if (isSearchingForMovies) {
+    // Use the appropriate URL for movies
+    if (isTrending) {
+      currentURL = `${API_URL_MOVIE}&page=${currentPage}`;
+    } else if (isTopRated) {
+      currentURL = `${BASE_URL}movie/top_rated?${API_KEY}&page=${currentPage}`;
+    } else if (isNowPlaying) {
+      currentURL = `${BASE_URL}movie/now_playing?${API_KEY}&page=${currentPage}`;
+    } else if (isUpcoming) {
+      currentURL = `${BASE_URL}movie/upcoming?${API_KEY}&page=${currentPage}`;
+    } else if (isDiscover) {
+      currentURL = `${BASE_URL}discover/movie?${API_KEY}&sort_by=${currentDiscoverSortBy}&page=${currentPage}`;
+    }
+  } else if (isSearchingForActors) {
+    // Use the appropriate URL for actors
+    currentURL = `${BASE_URL}person/popular?${API_KEY}&page=${currentPage}`;
+  }
+
+  // Fetch and append more movies
+  fetch(currentURL)
+    .then((res) => res.json())
+    .then((data) => {
+      showMovies(data.results);
+    });
+
+  // Scroll to the top of the page
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Update the text on the "Load More" button to display the current page number
+  loadMoreButton.textContent = `Load More (Page ${currentPage})`;
 }
 
 function updateColor(elt, vote_average) {
