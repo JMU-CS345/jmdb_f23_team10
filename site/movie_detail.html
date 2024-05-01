@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Movie Details</title>
@@ -9,12 +9,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap" rel="stylesheet">
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
 </head>
 
 <body>
     <div class="header">
-        <a href="header.html">
+        <a href="index.html">
             <div class="picture">
                 <img src="logo.png" alt="Logo" id="logo" width="100" height="100">
             </div>
@@ -26,13 +26,13 @@
         </div>
         <div class="inner_header2">
             <div class="dropdown">
-                <button id="profile-dropdown" class="common-dropdown-button">Profile</button>
+                <button type="button" id="profile-dropdown" class="common-dropdown-button">Profile</button>
                 <div class="dropdown-content">
-                    <a id='profileLink' href="profile_page.html">Profile Page</a>
-                    <button id='logoutLink' onclick="signOutBtn()">Log Out</button>
+                    <a id="profileLin" href="profile_page.html">Profile Page</a>
+                    <button type="button" id="logoutLink" onclick="signOutBtn()">Log Out</button>
                 </div>
             </div>
-            <a id='logInLink' href="login.html" style="display: none;">Log In</a>
+            <a id="logInLink" href="login.html" style="display: none;">Log In</a>
         </div>
     </div>
     <div class="container-detail">
@@ -50,7 +50,7 @@
             <form id="comment-form">
                 <textarea name="comment" id="comment-text" cols="30" rows="5"
                     placeholder="Type Your Comment..."></textarea>
-                <button type="button" onclick="submitComment()">Submit Comment</button>
+                <button type="submit" onclick="submitComment()">Submit Comment</button>
             </form>
             <div id="comments-list">
                 <!-- Comments will be displayed here -->
@@ -86,7 +86,7 @@
                 localStorage.clear();
                 loginStatus.textContent = 'Log In';
                 loginStatus.href = 'login.html';
-                window.location.href = 'header.html';
+                window.location.href = 'index.html';
             }
         }
     </script>
@@ -160,7 +160,7 @@
                 })
             })
     </script>
+    <script src="jmdb_details.js"></script>
 </body>
-<script src="jmdb_details.js"></script>
 
 </html>
